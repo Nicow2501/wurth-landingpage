@@ -9,7 +9,7 @@
     --anthrazit:#1A1A1A;--anthrazit-2:#222225;--ink:#1D1D1F;
     --mint:#2BDAB9;--mint-deep:#1F8A4C;--offwhite:#F5F5F5;
     --card:#ffffff;--line:#e7e7ea;--grey:#6B6B6B;--grey-l:#9a9aa0;
-    --red:#E5484D;--amber:#F5A623;--green:#1F8A4C;
+    --red:#E5484D;--amber:#F5A623;--green:#1F8A4C;--orange:#E8820C;
     --shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);--radius:16px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -80,6 +80,11 @@
   .ki-hoch>i{width:92%;background:var(--green)}.ki-mittel>i{width:55%;background:var(--amber)}.ki-niedrig>i{width:22%;background:var(--grey-l)}
   .ki-lab{font-size:10px;font-weight:700;color:var(--grey-l)}
   .talk-tag{font-size:9.5px;font-weight:700;color:#1f6fd6;background:rgba(43,138,255,.12);padding:2px 7px;border-radius:5px}
+  .by-tag{font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:5px;display:inline-flex;align-items:center;gap:4px}
+  .by-tag::before{content:"";width:6px;height:6px;border-radius:50%}
+  .by-wurth{background:#1A1A1A;color:#fff}.by-wurth::before{background:var(--mint)}
+  .by-elite{background:rgba(232,130,12,.14);color:#b9650a}.by-elite::before{background:var(--orange)}
+  .acard .arow.who-row{margin-top:6px}
 
   /* ===== §2 Produkte ===== */
   .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -98,9 +103,16 @@
   .pcard ul{list-style:none;display:flex;flex-direction:column;gap:7px}
   .pcard li{font-size:12.5px;display:flex;gap:8px;align-items:flex-start;line-height:1.4}
   .pcard li::before{content:"✓";color:var(--mint-deep);font-weight:800;flex:none}
-  .pcard .pfoot{padding:11px 16px;border-top:1px solid var(--line);background:#fafafa;display:flex;align-items:center;justify-content:space-between;font-size:12px}
+  .pcard .sold{padding:11px 16px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;font-size:12px}
+  .pcard .sold .sl{color:var(--grey);font-weight:600}
+  .pcard .sold .sv{font-weight:780;font-size:17px;font-variant-numeric:tabular-nums;color:var(--mint-deep);outline:none;min-width:18px;text-align:right;border-bottom:1.5px dashed var(--line);cursor:text}
+  .pcard .sold .sv:focus{border-color:var(--mint)}
+  .pcard .sold .sv.empty{color:var(--grey-l)}
+  .pcard .pfoot{padding:11px 16px;border-top:1px solid var(--line);background:#fafafa;font-size:11.5px}
+  .pcard .pfoot .pl{color:var(--grey);font-weight:600;text-transform:uppercase;letter-spacing:.4px;font-size:10px;margin-bottom:3px}
+  .pcard .pfoot .prow2{display:flex;align-items:center;justify-content:space-between}
   .pcard .pfoot .sc{color:var(--grey)}
-  .pcard .pfoot .rev{font-weight:760;font-variant-numeric:tabular-nums}
+  .pcard .pfoot .rev{font-weight:760;font-variant-numeric:tabular-nums;font-size:13px}
   .design-note{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
   .design-note .dn-item{flex:1;min-width:220px;border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:#fff;font-size:12.5px;color:var(--grey)}
   .design-note .dn-item b{color:var(--ink)}
@@ -144,6 +156,10 @@
   .tcard .fr.red{color:var(--red);font-weight:700}
   .tcard .hintclick{position:absolute;right:10px;top:10px;font-size:10px;color:var(--grey-l);opacity:0;transition:.12s}
   .tcard:hover .hintclick{opacity:1}
+  .tcard{cursor:grab}
+  .tcard.dragging{opacity:.45;cursor:grabbing}
+  .kcol.dragover{background:rgba(43,218,185,.07);outline:2px dashed var(--mint);outline-offset:-4px}
+  .tcard .grip{color:var(--grey-l);font-size:12px;margin-right:4px}
 
   /* Phasen */
   .phases{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
@@ -293,8 +309,7 @@
   <!-- 4. MASSNAHMEN -->
   <section id="board">
     <div class="sec-head"><span class="num">4</span><h2>Maßnahmen-Board</h2>
-      <span class="hint">Klick auf eine Karte = Status weiterschalten.</span></div>
-    <div class="filters" id="ownerFilter"></div>
+      <span class="hint">Karte ziehen (Desktop) oder antippen — wandert offen → in Arbeit → erledigt.</span></div>
     <div class="kanban" id="kanban"></div>
   </section>
 
@@ -359,45 +374,45 @@ const MEMBERSHIP_PREIS=490;
 
 /* ---- Produkte mit Inhalten ---- */
 const produkte=[
-  {n:"99-€-Leadkurs",typ:"Tripwire / Selbstliquidierer",preis:99,suffix:"",units:[30,50,80],style:"",
-   inh:["Einsteiger-Leadkurs als Eintrittstor","Deckt die Werbekosten (Self-Liquidating)","Qualifiziert echte Käufer vor"]},
-  {n:"Videokurs",typ:"Self-Study · Low-Touch",preis:1000,suffix:"",units:[2,4,6],style:"",
+  {id:"pr_99",n:"99-€-Leadkurs",typ:"Tripwire / Selbstliquidierer",preis:99,suffix:"",units:[30,50,80],style:"",verkauft:0,
+   inh:["Einsteiger-Leadkurs als Eintrittstor","Deckt die Werbekosten (Self-Liquidating)","Qualifiziert echte Käufer vor","Schnellster Hebel: Anfragen aus dem Bestand statt erst neue Leads"]},
+  {id:"pr_video",n:"Videokurs",typ:"Self-Study · Low-Touch",preis:1000,suffix:"",units:[2,4,6],style:"",verkauft:1,
    inh:["Kompletter Selbstlern-Videokurs","Kein laufender Fulfillment-Aufwand","Brücke zwischen Leadkurs und Modulen"]},
-  {n:"Modul Super Chat",typ:"Bestand / Cash — Wedge",preis:2500,suffix:"",units:[2,4,7],style:"",
-   inh:["Kompletter Aufbau Super Chat","1× Übergabe-Call","1× Check-Call nach 4 Wochen","Danach optional Membership (490 €/Mt.)"]},
-  {n:"Modul Leads / Marketing",typ:"Neukundenakquise",preis:3500,suffix:"",units:[1,2,3],style:"",
-   inh:["Funnel + Creatives + Tracking","Erste Kampagne aufgesetzt","Übergabe & Schulung zum Selbstbetrieb","Optional laufende Optimierung (Retainer)"]},
-  {n:"Modul Prozess / CRM",typ:"Infrastruktur · Zeit zurück",preis:2900,suffix:"",units:[1,2,3],style:"",
-   inh:["CRM-Aufbau + Prozessoptimierung","Mindset / Arbeitsweise","Übergabe","Danach optional Membership (490 €/Mt.)"]},
-  {n:"Komplett-Bundle",typ:"Premium-Anker · alle 3 Module",preis:6900,suffix:"",units:[1,2,3],style:"anchor",
-   inh:["Super Chat + Leads + Prozess","Für High-Intent-Käufer","Bester Gesamt-Hebel in einem Paket"]},
-  {n:"Membership",typ:"Wiederkehrend · MRR-Basis",preis:490,suffix:" / Mt.",units:[12,30,55],style:"mrr",unit_label:"aktive Mitglieder",
-   inh:["Community + Gruppen-Calls","EINE konsolidierte Stufe (kein Stapeln)","Re-Aktivierung gegen das Monat-2/3-Loch","Laufende Optimierung der Module"]},
+  {id:"pr_chat",n:"Modul 1 — Super Chat",typ:"Anfragen aus dem Bestand · Wedge",preis:2500,suffix:"",units:[2,4,7],style:"",verkauft:0,
+   inh:["Bestandskundenstamm aktiviert → in Tagen konkrete Anfragen & Termine","Komplett aufgebaut & übergeben","1× Check-Call nach 4 Wochen","Danach optional Membership (490 €/Mt.)"]},
+  {id:"pr_leads",n:"Modul 2 — Leads",typ:"Planbar neue Kunden",preis:3500,suffix:"",units:[1,2,3],style:"",verkauft:0,
+   inh:["System für konstant frische Anfragen (Werbung + organisch)","Funnel + Creatives + Tracking, erste Kampagne","Übergabe & Begleitung beim Selbstbetrieb","Optional laufende Optimierung (Retainer)"]},
+  {id:"pr_prozess",n:"Modul 3 — Prozess",typ:"Dein System & CRM · Zeit zurück",preis:2900,suffix:"",units:[1,2,3],style:"",verkauft:0,
+   inh:["Klare Prozesse + sauberes CRM, das dein Team führt","Damit nichts mehr versandet","„Rein, auf die Zahlen schauen, raus.“","Danach optional Membership (490 €/Mt.)"]},
+  {id:"pr_bundle",n:"Komplett-Bundle",typ:"Premium-Anker · alle 3 Module",preis:6900,suffix:"",units:[1,2,3],style:"anchor",verkauft:null,
+   inh:["Super Chat + Leads + Prozess in einem Paket","Für alle, die direkt durchstarten wollen","Bester Gesamt-Hebel"]},
+  {id:"pr_member",n:"Membership",typ:"Dranbleiben & wachsen · MRR-Basis",preis:490,suffix:" / Mt.",units:[12,30,55],style:"mrr",unit_label:"aktive Mitglieder",verkauft:null,
+   inh:["Community + regelmäßige Gruppen-Calls","EINE konsolidierte Stufe (kein Stapeln)","Re-Aktivierung gegen das Monat-2/3-Loch","Läuft über MemberSpot"]},
 ];
 
 /* ---- Automatisierungs-Status ---- status: done | next | human ---- */
 const autoProc=[
   // DONE
-  {id:"a_content",s:"done",t:"Content-Planung Social Media",d:"Redaktionsplan & Upload laufen über Airtable-System.",tool:"Airtable",ki:"hoch"},
-  {id:"a_carousel",s:"done",t:"LinkedIn-Carousel-Produktion",d:"Automatisierte Carousel-Erstellung (Pillow-Skill).",tool:"Carousel-Skill",ki:"hoch"},
-  {id:"a_research",s:"done",t:"Wettbewerbs- & Content-Recherche",d:"LinkedIn / Instagram / YouTube live ausgelesen.",tool:"Scraper-Skills",ki:"hoch"},
-  {id:"a_fireflies",s:"done",t:"Call-Mitschnitte & Recaps",d:"Jedes Gespräch transkribiert & zusammengefasst.",tool:"Fireflies",ki:"hoch"},
-  {id:"a_crm",s:"done",t:"CRM & Lead-Verwaltung",d:"Pipeline, Kontakte, Opportunities zentral.",tool:"Close",ki:"hoch"},
-  {id:"a_recap",s:"done",t:"Coaching-Recap-Folien",d:"Aus Fireflies-Transkript automatisch CI-Folien.",tool:"Recap-Skill",ki:"hoch"},
-  {id:"a_lp",s:"done",t:"Angebots-Landingpage",d:"Live auf GitHub Pages, jederzeit teilbar.",tool:"GitHub Pages",ki:"hoch"},
+  {id:"a_content",s:"done",t:"Content-Planung Social Media",d:"Redaktionsplan & Upload laufen über Airtable-System.",tool:"Airtable",ki:"hoch",by:"wurth"},
+  {id:"a_carousel",s:"done",t:"LinkedIn-Carousel-Produktion",d:"Automatisierte Carousel-Erstellung (Pillow-Skill).",tool:"Carousel-Skill",ki:"hoch",by:"wurth"},
+  {id:"a_research",s:"done",t:"Wettbewerbs- & Content-Recherche",d:"LinkedIn / Instagram / YouTube live ausgelesen.",tool:"Scraper-Skills",ki:"hoch",by:"wurth"},
+  {id:"a_fireflies",s:"done",t:"Call-Mitschnitte & Recaps",d:"Jedes Gespräch transkribiert & zusammengefasst.",tool:"Fireflies",ki:"hoch",by:"wurth"},
+  {id:"a_crm",s:"done",t:"CRM & Lead-Verwaltung",d:"Pipeline, Kontakte, Opportunities zentral.",tool:"Close",ki:"hoch",by:"wurth"},
+  {id:"a_recap",s:"done",t:"Coaching-Recap-Folien",d:"Aus Fireflies-Transkript automatisch CI-Folien.",tool:"Recap-Skill",ki:"hoch",by:"wurth"},
+  {id:"a_lp",s:"done",t:"Angebots-Landingpage",d:"Live auf GitHub Pages, jederzeit teilbar.",tool:"GitHub Pages",ki:"hoch",by:"elite"},
   // NEXT (KI-first, abhakbar)
-  {id:"n_buch",s:"next",t:"Buchhaltung",d:"Beleg-OCR + DATEV-Export ersetzt Sandra (spart 453 €/Mt.).",tool:"Buchhaltungs-Tool",ki:"hoch",talk:true},
-  {id:"n_report",s:"next",t:"Reporting / KPI-Briefing",d:"Close + Ads + Buchhaltung → dieses Dashboard + Wochen-Briefing.",tool:"Make + Close-API",ki:"hoch"},
-  {id:"n_onboard",s:"next",t:"Onboarding nach Kauf",d:"Willkommens-Sequenz, Zugänge, erste Schritte automatisch.",tool:"Make / E-Mail",ki:"hoch"},
-  {id:"n_faq",s:"next",t:"FAQ-Bot in der Community",d:"Beantwortet Standardfragen 24/7, entlastet Jasmin.",tool:"FAQ-Bot",ki:"hoch"},
-  {id:"n_react",s:"next",t:"Lead-Reaktivierung (800)",d:"KI-Copy-Sequenz + Voice-Agent ruft & terminiert.",tool:"Close Voice-Agent",ki:"hoch",talk:true},
-  {id:"n_setting",s:"next",t:"Setting / Terminierung",d:"KI-Setter qualifiziert & bucht, Mensch closed.",tool:"Voice-Agent",ki:"mittel"},
-  {id:"n_webinar",s:"next",t:"Evergreen-Webinar-Funnel",d:"Automatische Neukundenakquise rund um die Uhr.",tool:"Webinar-Tool",ki:"hoch"},
-  {id:"n_ascend",s:"next",t:"Ascension-Trigger",d:"Nach Super-Chat-Check-Call automatisch Upgrade-Angebot.",tool:"Make",ki:"hoch"},
+  {id:"n_buch",s:"next",t:"Buchhaltung",d:"Beleg-OCR + DATEV-Export ersetzt Sandra (spart 453 €/Mt.).",tool:"Buchhaltungs-Tool",ki:"hoch",talk:true,by:"wurth"},
+  {id:"n_report",s:"next",t:"Reporting / KPI-Briefing",d:"Close + Ads + Buchhaltung → dieses Dashboard + Wochen-Briefing.",tool:"Make + Close-API",ki:"hoch",by:"wurth"},
+  {id:"n_onboard",s:"next",t:"Onboarding nach Kauf",d:"Willkommens-Sequenz, Zugänge, erste Schritte automatisch.",tool:"Make / E-Mail",ki:"hoch",by:"wurth"},
+  {id:"n_faq",s:"next",t:"FAQ-Bot in der Community",d:"Beantwortet Standardfragen 24/7, entlastet Jasmin.",tool:"FAQ-Bot / MemberSpot",ki:"hoch",by:"wurth"},
+  {id:"n_react",s:"next",t:"Lead-Reaktivierung (800)",d:"KI-Copy-Sequenz + Voice-Agent ruft & terminiert.",tool:"Close Voice-Agent",ki:"hoch",talk:true,by:"elite"},
+  {id:"n_setting",s:"next",t:"Setting / Terminierung",d:"KI-Setter qualifiziert & bucht, Mensch closed.",tool:"Voice-Agent",ki:"mittel",by:"wurth"},
+  {id:"n_webinar",s:"next",t:"Evergreen-Webinar-Funnel",d:"Automatische Neukundenakquise rund um die Uhr.",tool:"Webinar-Tool",ki:"hoch",by:"elite"},
+  {id:"n_ascend",s:"next",t:"Ascension-Trigger",d:"Nach Super-Chat-Check-Call automatisch Upgrade-Angebot.",tool:"Make",ki:"hoch",by:"wurth"},
   // HUMAN
-  {id:"h_close",s:"human",t:"Sales-Closing-Calls",d:"Bleibt bei Ömer. KI nur Briefing davor & Recap danach.",tool:"Mensch + Fireflies",ki:"niedrig"},
-  {id:"h_care",s:"human",t:"Kundenbetreuung & Coaching",d:"Dein Qualitätsversprechen — bewusst menschlich.",tool:"Mensch",ki:"niedrig"},
-  {id:"h_lead",s:"human",t:"Strategische Entscheidungen (GL)",d:"Du entscheidest — KI assistiert (Kalender, Briefing).",tool:"KI-Assistent",ki:"mittel",talk:true},
+  {id:"h_close",s:"human",t:"Sales-Closing-Calls",d:"Bleibt menschlich nur bei High-Price-Tickets (Module/Bundle). Günstige Angebote laufen über Self-Serve/Webinar. KI: Briefing davor & Recap danach.",tool:"Mensch + Fireflies",ki:"niedrig",by:"wurth"},
+  {id:"h_care",s:"human",t:"Kundenbetreuung & Coaching",d:"Dein Qualitätsversprechen — bewusst menschlich.",tool:"Mensch",ki:"niedrig",by:"wurth"},
+  {id:"h_lead",s:"human",t:"Strategische Entscheidungen (GL)",d:"Du entscheidest — KI assistiert (Kalender, Briefing).",tool:"KI-Assistent",ki:"mittel",talk:true,by:"wurth"},
 ];
 
 const tasks=[
@@ -442,24 +457,21 @@ const risks=[
   ["💸","CAC > 99-€-Einnahmen","Self-Liquidating-Funnel kippt — Leadkurs muss Ads decken (CAC ≤ Einnahmen 99-€-Kurs)."],
 ];
 const toolGroups=[
-  {g:"Daten-Quellen fürs Dashboard (später live anbinden)",items:[
-    {n:"CRM – Close",d:"Leads, Opportunities, Pipeline. <b>Bereits verbunden.</b>",st:"done"},
+  {g:"Bereits im Einsatz (alles vorhanden)",items:[
+    {n:"CRM – Close",d:"Leads, Opportunities, Pipeline. <b>Verbunden.</b>",st:"done"},
     {n:"Fireflies – Call-Mitschnitte",d:"Transkripte & Recaps. <b>Verbunden.</b>",st:"done"},
     {n:"Google Drive – Dateien",d:"Decks, Specs, Handbücher. <b>Verbunden.</b>",st:"done"},
-    {n:"Werbekonten (Meta / Google Ads)",d:"Für CAC & Werbekosten-Tracking. <b>Noch anzubinden.</b>",st:"todo"},
-    {n:"Buchhaltungs-Tool",d:"Ersetzt Sandra (603 € → 150 €). <b>Tool noch wählen.</b>",st:"talk"},
-  ]},
-  {g:"Content & Marketing (läuft bereits)",items:[
-    {n:"Airtable „Content-System“",d:"Social-Media-Content-Planung. <b>Aktiv</b> inkl. Upload-Skill.",st:"done"},
+    {n:"Airtable „Content-System“",d:"Social-Media-Content-Planung inkl. Upload-Skill. <b>Aktiv.</b>",st:"done"},
     {n:"LinkedIn-Carousel-Produktion",d:"Pillow-basierte Carousels. <b>Aktiv.</b>",st:"done"},
     {n:"Social-Scraper (LinkedIn/IG/YT)",d:"Wettbewerbs- & Content-Recherche. <b>Verbunden.</b>",st:"done"},
-    {n:"Make.com-Automationen",d:"Blueprints vorhanden. <b>Teilweise</b> — für Onboarding/Reporting ausbauen.",st:"prog"},
+    {n:"MemberSpot – Community/Kurse",d:"Membership-Plattform für 490-€-Stufe, Gruppen-Calls & Kursauslieferung. <b>Vorhanden.</b>",st:"done"},
+    {n:"Make.com – Automationen",d:"Blueprints vorhanden. <b>Teilweise</b> — für Onboarding/Reporting/Ascension ausbauen.",st:"prog"},
   ]},
-  {g:"Neu aufzusetzen (aus Maßnahmenplan)",items:[
-    {n:"Community-/Membership-Plattform",d:"Trägt 490-€-Membership & Gruppen-Calls. <b>Phase 1, bis 11.07.</b>",st:"todo"},
-    {n:"Evergreen-Webinar-Tool",d:"Neukundenakquise Super Chat + Marketing. <b>Phase 2, bis 18.07.</b>",st:"todo"},
-    {n:"Checkout / Zahlungsanbieter",d:"Für Kurs + Module + Membership (2 % Gebühren im Modell). <b>Prüfen.</b>",st:"talk"},
-    {n:"Landingpages je Modul",d:"Elitewerk + Nico. <b>Phase 2, bis 18.07.</b>",st:"todo"},
+  {g:"Offen – meine Empfehlung dazu",items:[
+    {n:"Buchhaltungs-Tool",d:"Ersetzt Sandra (603 € → 150 €). <b>Empfehlung:</b> sevDesk oder lexoffice (DE, Beleg-OCR + DATEV/Steuerberater-Export). <b>Mit Nico entscheiden.</b>",st:"talk"},
+    {n:"Checkout / Zahlungsanbieter",d:"Für Kurs + Module + Membership (2 % Gebühren im Modell). <b>Empfehlung:</b> CopeCart oder Digistore24 (DE, Brutto-Rechnung + Abo + Affiliate).",st:"talk"},
+    {n:"Evergreen-Webinar-Tool",d:"Automatische Neukundenakquise rund um die Uhr. <b>Empfehlung:</b> WebinarJam/EverWebinar oder eWebinar. <b>Phase 2, bis 18.07.</b>",st:"todo"},
+    {n:"Werbekonten (Meta / Google Ads)",d:"Ans Dashboard anbinden für CAC & Werbekosten. <b>Liegt bei Elitewerk</b> — Zugänge/Reporting-Export holen.",st:"todo"},
   ]},
 ];
 
@@ -473,6 +485,7 @@ state.taskSt=state.taskSt||{};
 state.checks=state.checks||{};
 state.autoDone=state.autoDone||{};
 state.funnel=state.funnel||{kontaktiert:0,webinar:0,call:0,abschluss:0};
+if(!state.verkauft){state.verkauft={};produkte.forEach(p=>{state.verkauft[p.id]=p.verkauft;});}
 
 const eur=n=>Math.round(n).toLocaleString("de-DE")+" €";
 const num=n=>Math.round(n).toLocaleString("de-DE");
@@ -490,15 +503,18 @@ function renderAuto(){
     const showCb=p.s==="next";
     const cb= showCb?`<div class="cbx ${done?'done':''}" data-auto="${p.id}">${done?'✓':''}</div>`
                     : `<span class="dn" style="background:${p.s==='done'?'var(--green)':'var(--grey-l)'}"></span>`;
+    const byBadge=p.by==="elite"
+      ? '<span class="by-tag by-elite">Elitewerk</span>'
+      : '<span class="by-tag by-wurth">Wurth Consulting</span>';
     return `<div class="acard ${done&&p.s==='next'?'done-row':''}">
       ${cb}
       <div class="ab">
         <div class="at">${p.t}</div>
         <div class="ad">${p.d}</div>
+        <div class="arow who-row">${byBadge}${p.talk?'<span class="talk-tag">mit Nico</span>':''}</div>
         <div class="arow">
           <span class="tool-tag">${p.tool}</span>
           <span class="kibar ki-${p.ki}"><i></i></span><span class="ki-lab">KI ${kiLabel(p.ki)}</span>
-          ${p.talk?'<span class="talk-tag">mit Nico</span>':''}
         </div>
       </div></div>`;
   };
@@ -525,10 +541,13 @@ function renderAuto(){
 /* ===== §2 Produkte ===== */
 function renderProducts(){
   const s=state.scn;
-  $("#prodHint").textContent="Umsatz-Zeile = Szenario "+SCN[s]+" · alle Preise brutto";
+  $("#prodHint").textContent="„Bereits verkauft“ = Ist (editierbar) · Ziel-Zeile = Projektion bei Szenario "+SCN[s]+" · alle Preise brutto";
   $("#prodGrid").innerHTML=produkte.map(p=>{
     const u=p.units[s], rev=p.preis*u;
-    const unitLab=p.unit_label?`${u} ${p.unit_label}`:`${u} × verkauft`;
+    const zielLab=p.unit_label?`${u} ${p.unit_label}`:`${u} × verkauft`;
+    const sold=state.verkauft[p.id];
+    const soldDisp=(sold===null||sold===undefined||sold==="")?"?":num(sold);
+    const soldEmpty=(soldDisp==="?")?"empty":"";
     return `<div class="pcard ${p.style}">
       <div class="ph">
         <div class="ptype">${p.typ}</div>
@@ -539,7 +558,11 @@ function renderProducts(){
         <div class="clab">Das ist drin</div>
         <ul>${p.inh.map(i=>`<li>${i}</li>`).join("")}</ul>
       </div>
-      <div class="pfoot"><span class="sc">${unitLab}</span><span class="rev">${eur(rev)} / Mt.</span></div>
+      <div class="sold"><span class="sl">Bereits verkauft</span><span class="sv ${soldEmpty}" contenteditable="true" data-sold="${p.id}">${soldDisp}</span></div>
+      <div class="pfoot">
+        <div class="pl">Ziel · ${SCN[s]}</div>
+        <div class="prow2"><span class="sc">${zielLab}</span><span class="rev">${eur(rev)} / Mt.</span></div>
+      </div>
     </div>`;
   }).join("");
 }
@@ -578,21 +601,17 @@ function renderScenario(){
 function taskStatus(t){return state.taskSt[t.id]??t.st}
 function isOverdue(t){return taskStatus(t)<2 && new Date(t.frist)<TODAY}
 function fmtFrist(f){return new Date(f).toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"})}
-let ownerFilterVal="alle";
 function renderBoard(){
-  const owners=["alle",...new Set(tasks.map(t=>t.who))];
-  $("#ownerFilter").innerHTML=owners.map(o=>`<button data-o="${o}" class="${o===ownerFilterVal?'on':''}">${o==="alle"?"Alle":o}</button>`).join("");
   const cols=[{st:0,t:"Offen",dc:"dot-offen"},{st:1,t:"In Arbeit",dc:"dot-arbeit"},{st:2,t:"Erledigt",dc:"dot-erledigt"}];
-  const filt=tasks.filter(t=>ownerFilterVal==="alle"||t.who===ownerFilterVal);
   $("#kanban").innerHTML=cols.map(c=>{
-    const list=filt.filter(t=>taskStatus(t)===c.st);
-    return `<div class="kcol"><h3><span class="dotc ${c.dc}"></span>${c.t}<span class="cnt">${list.length}</span></h3>
+    const list=tasks.filter(t=>taskStatus(t)===c.st);
+    return `<div class="kcol" data-st="${c.st}"><h3><span class="dotc ${c.dc}"></span>${c.t}<span class="cnt">${list.length}</span></h3>
       ${list.map(t=>{const over=isOverdue(t);
-        return `<div class="tcard ${over?'over':''}" data-id="${t.id}"><span class="hintclick">klick → weiter</span>
-          <div class="tt">${t.t}</div>
-          <div class="tm"><span class="ph2">P${t.ph}</span><span class="who">${t.who}</span>
+        return `<div class="tcard ${over?'over':''}" draggable="true" data-id="${t.id}"><span class="hintclick">ziehen / tippen</span>
+          <div class="tt"><span class="grip">⠿</span>${t.t}</div>
+          <div class="tm"><span class="ph2">P${t.ph}</span>
           <span class="fr ${over?'red':''}">📅 ${fmtFrist(t.frist)}${over?' · überfällig':''}</span></div></div>`;
-      }).join("")||'<div style="font-size:12px;color:var(--grey-l);padding:8px 2px">–</div>'}
+      }).join("")||'<div style="font-size:12px;color:var(--grey-l);padding:8px 2px">hier ablegen …</div>'}
     </div>`;
   }).join("");
 }
@@ -648,8 +667,18 @@ function renderAll(){renderTop();renderAuto();renderProducts();renderScenario();
 /* ===== EVENTS ===== */
 $("#scnToggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.scn=+b.dataset.scn;save();renderTop();renderProducts();renderScenario();});
 $("#auto").addEventListener("click",e=>{const c=e.target.closest(".cbx[data-auto]");if(!c)return;const id=c.dataset.auto;state.autoDone[id]=!state.autoDone[id];save();renderAuto();});
-$("#kanban").addEventListener("click",e=>{const c=e.target.closest(".tcard");if(!c)return;const t=tasks.find(x=>x.id===c.dataset.id);state.taskSt[t.id]=((taskStatus(t))+1)%3;save();renderBoard();renderPhases();});
-$("#ownerFilter").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ownerFilterVal=b.dataset.o;renderBoard();});
+// Klick/Tippen: Status weiterschalten (gut für Touch)
+$("#kanban").addEventListener("click",e=>{const c=e.target.closest(".tcard");if(!c||c.dataset.dragged)return;const t=tasks.find(x=>x.id===c.dataset.id);state.taskSt[t.id]=((taskStatus(t))+1)%3;save();renderBoard();renderPhases();});
+// Drag & Drop zwischen den Spalten
+let dragId=null;
+$("#kanban").addEventListener("dragstart",e=>{const c=e.target.closest(".tcard");if(!c)return;dragId=c.dataset.id;c.classList.add("dragging");c.dataset.dragged="1";e.dataTransfer.effectAllowed="move";});
+$("#kanban").addEventListener("dragend",e=>{const c=e.target.closest(".tcard");if(c){c.classList.remove("dragging");setTimeout(()=>{delete c.dataset.dragged;},0);}document.querySelectorAll(".kcol.dragover").forEach(k=>k.classList.remove("dragover"));});
+$("#kanban").addEventListener("dragover",e=>{const k=e.target.closest(".kcol");if(!k)return;e.preventDefault();k.classList.add("dragover");});
+$("#kanban").addEventListener("dragleave",e=>{const k=e.target.closest(".kcol");if(k&&!k.contains(e.relatedTarget))k.classList.remove("dragover");});
+$("#kanban").addEventListener("drop",e=>{const k=e.target.closest(".kcol");if(!k||dragId===null)return;e.preventDefault();state.taskSt[dragId]=+k.dataset.st;dragId=null;save();renderBoard();renderPhases();});
+// Bereits-verkauft editierbar
+$("#prodGrid").addEventListener("blur",e=>{const el=e.target.closest("[data-sold]");if(!el)return;const raw=el.textContent.trim();state.verkauft[el.dataset.sold]=(raw===""||raw==="?")?null:parseNum(raw);save();renderProducts();},true);
+$("#prodGrid").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.closest("[data-sold]")){e.preventDefault();e.target.blur();}});
 $("#funnel").addEventListener("input",e=>{const inp=e.target.closest("input[data-f]");if(!inp)return;state.funnel[inp.dataset.f]=parseNum(inp.value);save();});
 $("#funnel").addEventListener("blur",e=>{if(e.target.closest("input[data-f]"))renderFunnel();},true);
 $("#toolList").addEventListener("click",e=>{const c=e.target.closest(".cbx2");if(!c)return;const id=c.dataset.check;state.checks[id]=!(state.checks[id]??c.classList.contains("done"));save();renderTools();});
