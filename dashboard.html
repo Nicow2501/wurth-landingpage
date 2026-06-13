@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wurth Consulting · Steuerungs-Dashboard</title>
+<style>
+  :root{
+    --anthrazit:#1A1A1A;--anthrazit-2:#222225;--ink:#1D1D1F;
+    --mint:#2BDAB9;--mint-deep:#1F8A4C;--offwhite:#F5F5F5;
+    --card:#ffffff;--line:#e7e7ea;--grey:#6B6B6B;--grey-l:#9a9aa0;
+    --red:#E5484D;--amber:#F5A623;--green:#1F8A4C;
+    --shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);--radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Calibri,Inter,Roboto,Helvetica,Arial,sans-serif;
+    background:var(--offwhite);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.45}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 22px 80px}
+
+  /* Topbar */
+  .topbar{background:var(--anthrazit);color:#fff;position:sticky;top:0;z-index:50;border-bottom:1px solid #000}
+  .topbar-inner{max-width:1280px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.2px}
+  .brand .dot{width:11px;height:11px;border-radius:3px;background:var(--mint);box-shadow:0 0 0 4px rgba(43,218,185,.18)}
+  .brand small{display:block;font-weight:500;color:var(--grey-l);font-size:11px;letter-spacing:.4px;text-transform:uppercase}
+  .topbar .meta{margin-left:auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .freiheit{display:flex;flex-direction:column;align-items:flex-end;line-height:1.1}
+  .freiheit b{color:var(--mint);font-size:18px}
+  .freiheit span{font-size:11px;color:var(--grey-l);text-transform:uppercase;letter-spacing:.5px}
+  .date-chip{font-size:12px;color:var(--grey-l);background:#000;padding:6px 11px;border-radius:8px}
+  .seg{display:inline-flex;background:#000;border:1px solid #34343a;border-radius:10px;padding:3px}
+  .seg button{border:0;background:transparent;color:var(--grey-l);font:inherit;font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:8px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .seg button.on{background:var(--mint);color:#062a23}
+
+  /* Sections */
+  section{margin-top:38px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .sec-head h2{font-size:19px;font-weight:700;letter-spacing:-.2px}
+  .sec-head .num{font-size:12px;font-weight:700;color:var(--mint-deep);background:rgba(31,138,76,.1);width:24px;height:24px;border-radius:7px;display:grid;place-items:center;flex:none}
+  .sec-head .hint{font-size:13px;color:var(--grey);margin-left:auto}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .pad{padding:20px}
+
+  /* ===== §1 Automatisierungs-Status ===== */
+  .auto-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
+  .sum{padding:16px 18px;border-radius:14px;color:#fff;position:relative;overflow:hidden}
+  .sum.s-done{background:linear-gradient(135deg,#1F8A4C,#177a42)}
+  .sum.s-next{background:linear-gradient(135deg,#E29A12,#c9820a)}
+  .sum.s-human{background:linear-gradient(135deg,#3a3a40,#26262b)}
+  .sum .n{font-size:32px;font-weight:780;letter-spacing:-1px;line-height:1}
+  .sum .l{font-size:12.5px;font-weight:600;margin-top:6px;opacity:.95}
+  .sum .ic{position:absolute;right:14px;top:12px;font-size:26px;opacity:.55}
+  .progwrap{margin:2px 0 22px}
+  .progwrap .pl{display:flex;justify-content:space-between;font-size:12px;color:var(--grey);margin-bottom:6px}
+  .progwrap .pbarbig{height:12px;border-radius:8px;background:#e9eaec;overflow:hidden;display:flex}
+  .progwrap .pbarbig i{display:block;height:100%}
+  .progwrap .pbarbig .pdone{background:var(--green)}
+  .progwrap .pbarbig .pnext{background:var(--amber)}
+
+  .autoboard{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .acol{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+  .acol h3{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:4px}
+  .acol .sub{font-size:11.5px;color:var(--grey);margin-bottom:12px}
+  .acol h3 .cnt{margin-left:auto;font-size:11px;color:#fff;padding:2px 9px;border-radius:20px}
+  .h-done .cnt{background:var(--green)}.h-next .cnt{background:var(--amber)}.h-human .cnt{background:#555}
+  .acard{border:1px solid var(--line);border-radius:11px;padding:11px 12px;margin-bottom:9px;background:#fff;display:flex;gap:10px;align-items:flex-start}
+  .acard:last-child{margin-bottom:0}
+  .acard .cbx{width:20px;height:20px;border-radius:6px;border:2px solid var(--line);flex:none;cursor:pointer;display:grid;place-items:center;font-size:12px;color:#fff;background:#fff;margin-top:1px;transition:.12s}
+  .acard .cbx.done{background:var(--green);border-color:var(--green)}
+  .acard .dn{width:8px;height:8px;border-radius:50%;flex:none;margin-top:5px}
+  .acard.done-row .at{text-decoration:line-through;color:var(--grey)}
+  .acard .ab{flex:1}
+  .acard .at{font-size:13px;font-weight:650;line-height:1.3}
+  .acard .ad{font-size:11.5px;color:var(--grey);margin-top:3px;line-height:1.45}
+  .acard .arow{display:flex;align-items:center;gap:7px;margin-top:8px;flex-wrap:wrap}
+  .tool-tag{font-size:10px;font-weight:600;background:var(--offwhite);color:var(--grey);padding:2px 7px;border-radius:5px}
+  .kibar{height:5px;width:46px;background:#eef0f1;border-radius:4px;overflow:hidden}
+  .kibar>i{display:block;height:100%}
+  .ki-hoch>i{width:92%;background:var(--green)}.ki-mittel>i{width:55%;background:var(--amber)}.ki-niedrig>i{width:22%;background:var(--grey-l)}
+  .ki-lab{font-size:10px;font-weight:700;color:var(--grey-l)}
+  .talk-tag{font-size:9.5px;font-weight:700;color:#1f6fd6;background:rgba(43,138,255,.12);padding:2px 7px;border-radius:5px}
+
+  /* ===== §2 Produkte ===== */
+  .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .pcard{border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;display:flex;flex-direction:column;background:#fff;box-shadow:var(--shadow)}
+  .pcard .ph{padding:15px 16px 13px;border-bottom:1px solid var(--line);background:var(--offwhite)}
+  .pcard.anchor .ph{background:var(--anthrazit);color:#fff}
+  .pcard.mrr .ph{background:linear-gradient(135deg,#1F8A4C,#177a42);color:#fff}
+  .pcard .ptype{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;opacity:.85}
+  .pcard.anchor .ptype,.pcard.mrr .ptype{color:var(--mint)}
+  .pcard .pname{font-size:16px;font-weight:730;margin-top:5px;letter-spacing:-.2px}
+  .pcard .pprice{font-size:24px;font-weight:780;letter-spacing:-.5px;margin-top:6px}
+  .pcard .pprice small{font-size:13px;font-weight:600;color:var(--grey)}
+  .pcard.anchor .pprice small,.pcard.mrr .pprice small{color:rgba(255,255,255,.7)}
+  .pcard .pbody{padding:14px 16px;flex:1}
+  .pcard .pbody .clab{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--grey);margin-bottom:8px}
+  .pcard ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+  .pcard li{font-size:12.5px;display:flex;gap:8px;align-items:flex-start;line-height:1.4}
+  .pcard li::before{content:"✓";color:var(--mint-deep);font-weight:800;flex:none}
+  .pcard .pfoot{padding:11px 16px;border-top:1px solid var(--line);background:#fafafa;display:flex;align-items:center;justify-content:space-between;font-size:12px}
+  .pcard .pfoot .sc{color:var(--grey)}
+  .pcard .pfoot .rev{font-weight:760;font-variant-numeric:tabular-nums}
+  .design-note{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .design-note .dn-item{flex:1;min-width:220px;border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:#fff;font-size:12.5px;color:var(--grey)}
+  .design-note .dn-item b{color:var(--ink)}
+
+  /* Tables / scenario */
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:right;padding:11px 14px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--grey);font-weight:700;border-bottom:1.5px solid var(--line)}
+  tbody tr:last-child td{border-bottom:0}
+  .col-on{background:rgba(43,218,185,.08)}
+  th.col-on{color:var(--mint-deep)}
+  tr.total td{font-weight:760;font-size:15px;background:#fafafa}
+  tr.total td.col-on{background:rgba(43,218,185,.14)}
+  .scn-bars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:18px}
+  .scn-bars .b{padding:14px;border:1px solid var(--line);border-radius:12px;text-align:center}
+  .scn-bars .b.on{border-color:var(--mint);background:rgba(43,218,185,.06)}
+  .scn-bars .b .t{font-size:12px;color:var(--grey);font-weight:600}
+  .scn-bars .b .n{font-size:22px;font-weight:760;margin-top:4px;letter-spacing:-.5px}
+  .scn-bars .b .barv{height:8px;background:#eef0f1;border-radius:5px;margin-top:10px;overflow:hidden}
+  .scn-bars .b .barv>i{display:block;height:100%;background:var(--mint)}
+
+  /* Kanban */
+  .filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+  .filters button{border:1px solid var(--line);background:#fff;color:var(--grey);font:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:20px;cursor:pointer}
+  .filters button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .kcol{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;min-height:120px}
+  .kcol h3{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .kcol h3 .cnt{margin-left:auto;font-size:11px;color:var(--grey);background:var(--offwhite);padding:2px 8px;border-radius:20px}
+  .kcol .dotc{width:9px;height:9px;border-radius:50%}
+  .dot-offen{background:var(--grey-l)}.dot-arbeit{background:var(--amber)}.dot-erledigt{background:var(--green)}
+  .tcard{border:1px solid var(--line);border-radius:11px;padding:11px 12px;margin-bottom:9px;cursor:pointer;transition:.12s;background:#fff;position:relative}
+  .tcard:hover{border-color:var(--mint);box-shadow:0 4px 12px rgba(0,0,0,.05)}
+  .tcard.over{border-left:3px solid var(--red)}
+  .tcard .tt{font-size:13px;font-weight:600;line-height:1.35}
+  .tcard .tm{display:flex;align-items:center;gap:8px;margin-top:9px;font-size:11.5px;color:var(--grey);flex-wrap:wrap}
+  .tcard .who{font-weight:700;color:var(--ink)}
+  .tcard .ph2{font-size:10px;font-weight:700;color:var(--mint-deep);background:rgba(31,138,76,.1);padding:2px 6px;border-radius:5px}
+  .tcard .fr{font-variant-numeric:tabular-nums}
+  .tcard .fr.red{color:var(--red);font-weight:700}
+  .tcard .hintclick{position:absolute;right:10px;top:10px;font-size:10px;color:var(--grey-l);opacity:0;transition:.12s}
+  .tcard:hover .hintclick{opacity:1}
+
+  /* Phasen */
+  .phases{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .phase{padding:16px}
+  .phase .pt{font-size:13px;font-weight:700}
+  .phase .pd{font-size:11.5px;color:var(--grey);margin-top:2px}
+  .phase .ring-wrap{display:flex;align-items:center;gap:14px;margin-top:14px}
+  .ring{--p:0;width:62px;height:62px;border-radius:50%;flex:none;background:conic-gradient(var(--mint-deep) calc(var(--p)*1%),#edeef0 0);display:grid;place-items:center}
+  .ring::after{content:attr(data-pct);width:46px;height:46px;background:#fff;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:760}
+  .phase .meta{font-size:12px;color:var(--grey)}.phase .meta b{color:var(--ink)}
+
+  /* Funnel */
+  .funnel{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .fstep{border:1px solid var(--line);border-radius:13px;padding:16px;text-align:center;position:relative}
+  .fstep .fl{font-size:12px;color:var(--grey);font-weight:600}
+  .fstep input{width:100%;border:0;text-align:center;font-size:30px;font-weight:760;color:var(--ink);outline:none;font-variant-numeric:tabular-nums;background:transparent;margin-top:6px}
+  .fstep input:focus{color:var(--mint-deep)}
+  .fstep .pc{font-size:11.5px;color:var(--mint-deep);font-weight:700;margin-top:4px}
+  .fstep .fbar{height:7px;background:#eef0f1;border-radius:5px;margin-top:10px;overflow:hidden}
+  .fstep .fbar>i{display:block;height:100%;background:linear-gradient(90deg,var(--mint),var(--mint-deep))}
+  .fstep .arrow{position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--line);font-size:18px;z-index:2}
+
+  .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:start}
+  .kpilist td:first-child{font-weight:600}
+  .trend{font-size:13px;font-weight:760}.trend.up{color:var(--green)}.trend.down{color:var(--red)}
+  .flag{display:flex;gap:12px;padding:13px 4px;border-bottom:1px solid var(--line)}
+  .flag:last-child{border-bottom:0}
+  .flag .fi{width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center;font-size:15px;background:rgba(245,166,35,.13)}
+  .flag .ft{font-size:13.5px;font-weight:650}.flag .fd{font-size:12.5px;color:var(--grey);margin-top:2px}
+
+  /* Tool checklist */
+  .tgroup{margin-bottom:8px}
+  .titem{display:flex;align-items:flex-start;gap:13px;padding:13px 4px;border-bottom:1px solid var(--line)}
+  .titem:last-child{border-bottom:0}
+  .cbx2{width:22px;height:22px;border-radius:7px;border:2px solid var(--line);flex:none;cursor:pointer;display:grid;place-items:center;margin-top:1px;transition:.12s;font-size:13px;color:#fff;background:#fff}
+  .cbx2.done{background:var(--green);border-color:var(--green)}
+  .titem .ti{flex:1}.titem .ti .tn{font-size:14px;font-weight:650}
+  .titem .ti .td{font-size:12.5px;color:var(--grey);margin-top:3px}.titem .ti .td b{color:var(--ink)}
+  .badge{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;align-self:flex-start;margin-top:2px}
+  .b-done{background:rgba(31,138,76,.12);color:var(--green)}
+  .b-todo{background:rgba(229,72,77,.1);color:var(--red)}
+  .b-prog{background:rgba(245,166,35,.13);color:#b9760a}
+  .b-talk{background:rgba(43,138,255,.12);color:#1f6fd6}
+
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--grey);margin-top:14px;align-items:center}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .foot{margin-top:46px;text-align:center;color:var(--grey-l);font-size:12px;line-height:1.7}
+  .foot b{color:var(--grey)}
+
+  @media(max-width:980px){
+    .auto-summary,.autoboard,.prod-grid,.phases,.funnel{grid-template-columns:repeat(2,1fr)}
+    .kanban{grid-template-columns:1fr}
+    .grid2{grid-template-columns:1fr}
+  }
+  @media(max-width:560px){
+    .auto-summary,.autoboard,.prod-grid,.scn-bars,.phases,.funnel{grid-template-columns:1fr}
+    .freiheit{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="dot"></span><div>Wurth Consulting<small>Steuerungs-Dashboard</small></div></div>
+    <div class="meta">
+      <div class="seg" id="scnToggle">
+        <button data-scn="0">Konservativ</button>
+        <button data-scn="1" class="on">Realistisch</button>
+        <button data-scn="2">Optimistisch</button>
+      </div>
+      <div class="freiheit"><b id="freiIdx">–</b><span>Freiheits-Index · Ziel/Mt.</span></div>
+      <div class="date-chip" id="dateChip">Stand –</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- 1. AUTOMATISIERUNGS-STATUS -->
+  <section id="auto">
+    <div class="sec-head">
+      <span class="num">1</span><h2>Wo stehen wir? — Automatisierungs-Status</h2>
+      <span class="hint">Was läuft schon · was kommt als KI-first · was bleibt bewusst menschlich</span>
+    </div>
+    <div class="auto-summary">
+      <div class="sum s-done"><span class="ic">✅</span><div class="n" id="cDone">0</div><div class="l">Prozesse bereits automatisiert</div></div>
+      <div class="sum s-next"><span class="ic">🔜</span><div class="n" id="cNext">0</div><div class="l">als Nächstes (KI-first) — offen</div></div>
+      <div class="sum s-human"><span class="ic">🤝</span><div class="n" id="cHuman">0</div><div class="l">bleiben bewusst menschlich</div></div>
+    </div>
+    <div class="progwrap">
+      <div class="pl"><span>Automatisierungsgrad (von allen automatisierbaren Prozessen)</span><span id="autoPctLab">0 %</span></div>
+      <div class="pbarbig"><i class="pdone" id="barDone" style="width:0%"></i><i class="pnext" id="barNext" style="width:0%"></i></div>
+    </div>
+    <div class="autoboard">
+      <div class="acol">
+        <h3 class="h-done"><span class="dotc dot-erledigt"></span>Bereits automatisiert <span class="cnt" id="cnt0">0</span></h3>
+        <div class="sub">Läuft heute schon im Tagesgeschäft.</div>
+        <div id="col-done"></div>
+      </div>
+      <div class="acol">
+        <h3 class="h-next"><span class="dotc dot-arbeit"></span>Als Nächstes: KI-first <span class="cnt" id="cnt1">0</span></h3>
+        <div class="sub">Hier holen wir die größten Hebel. Abhaken, sobald erledigt.</div>
+        <div id="col-next"></div>
+      </div>
+      <div class="acol">
+        <h3 class="h-human"><span class="dotc dot-offen"></span>Bleibt menschlich <span class="cnt" id="cnt2">0</span></h3>
+        <div class="sub">Bewusste Entscheidung — KI nur im Hintergrund.</div>
+        <div id="col-human"></div>
+      </div>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--green)"></i>KI-Grad hoch</span>
+      <span><i style="background:var(--amber)"></i>mittel / hybrid</span>
+      <span><i style="background:var(--grey-l)"></i>niedrig (Mensch führt)</span>
+      <span><span class="talk-tag">mit Nico</span>Entscheidung offen</span>
+    </div>
+  </section>
+
+  <!-- 2. PRODUKTE & PREISE -->
+  <section id="produkte">
+    <div class="sec-head">
+      <span class="num">2</span><h2>Produkte & Preise (Angebot im Umbau)</h2>
+      <span class="hint" id="prodHint">Umsatz-Zeile = Szenario Realistisch · alle Preise brutto</span>
+    </div>
+    <div class="prod-grid" id="prodGrid"></div>
+    <div class="design-note">
+      <div class="dn-item"><b>Aufstiegslogik:</b> günstiger Einstieg → schneller sichtbarer Erfolg → Upgrade. Reihenfolge: Super Chat → Leads → Prozess.</div>
+      <div class="dn-item"><b>Membership = EINE Stufe</b> (nicht pro Modul stapeln → verhindert Churn). Umsetzung in Gruppen-Calls, nicht 1:1.</div>
+      <div class="dn-item"><b>„Loch" Monat 2–3</b> ist normaler Energieabfall → Re-Aktivierungsmechanik genau dort in die Membership einbauen.</div>
+    </div>
+  </section>
+
+  <!-- 3. SZENARIO -->
+  <section id="szenario">
+    <div class="sec-head"><span class="num">3</span><h2>Szenario-Vergleich</h2>
+      <span class="hint">Aktives Szenario steuert die Produkt- & Umsatzzahlen oben.</span></div>
+    <div class="card pad">
+      <table id="scnTable">
+        <thead><tr><th>Kennzahl</th><th data-c="0">Konservativ</th><th data-c="1">Realistisch</th><th data-c="2">Optimistisch</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="scn-bars" id="scnBars"></div>
+    </div>
+  </section>
+
+  <!-- 4. MASSNAHMEN -->
+  <section id="board">
+    <div class="sec-head"><span class="num">4</span><h2>Maßnahmen-Board</h2>
+      <span class="hint">Klick auf eine Karte = Status weiterschalten.</span></div>
+    <div class="filters" id="ownerFilter"></div>
+    <div class="kanban" id="kanban"></div>
+  </section>
+
+  <!-- 5. PHASEN -->
+  <section id="phasen">
+    <div class="sec-head"><span class="num">5</span><h2>Fortschritt je Phase</h2>
+      <span class="hint">% erledigter Aufgaben · überfällige in Rot</span></div>
+    <div class="phases" id="phaseGrid"></div>
+  </section>
+
+  <!-- 6. LEADS -->
+  <section id="leads">
+    <div class="sec-head"><span class="num">6</span><h2>Lead-Tracker: 800 reaktivieren</h2>
+      <span class="hint">Zahlen editierbar · Conversion vom Schritt davor</span></div>
+    <div class="card pad"><div class="funnel" id="funnel"></div></div>
+  </section>
+
+  <!-- 7. KPIs -->
+  <section id="kpiliste">
+    <div class="sec-head"><span class="num">7</span><h2>KPIs & Risiko-Flags</h2></div>
+    <div class="grid2">
+      <div class="card pad">
+        <table class="kpilist"><thead><tr><th>KPI</th><th style="text-align:left">Definition</th><th>Ziel</th></tr></thead>
+          <tbody id="kpiBody"></tbody></table>
+      </div>
+      <div class="card pad">
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--red)">⚠︎ Risiko-Flags</div>
+        <div id="riskList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. TOOLS -->
+  <section id="tools">
+    <div class="sec-head"><span class="num">8</span><h2>Tool-Stack & Setup-Checkliste</h2>
+      <span class="hint">Abhaken zum Erledigen</span></div>
+    <div class="card pad" id="toolList"></div>
+    <div class="legend">
+      <span><span class="badge b-done">läuft</span> schon im Einsatz</span>
+      <span><span class="badge b-prog">in Arbeit</span></span>
+      <span><span class="badge b-todo">offen</span> aufzusetzen</span>
+      <span><span class="badge b-talk">mit Nico</span> Entscheidung nötig</span>
+    </div>
+  </section>
+
+  <div class="foot">
+    Wurth Consulting · Steuerungs-Dashboard — aus <b>Wurth_Dashboard_Spec.md</b> (Stand 13.06.2026).<br>
+    Eingaben (Status, Häkchen, Leads) werden lokal im Browser gespeichert.
+  </div>
+</div>
+
+<script>
+const STAND="13.06.2026";
+const TODAY=new Date(2026,5,13);
+const SCN=["Konservativ","Realistisch","Optimistisch"];
+
+const finanz={
+  brutto:[29150,60250,98270],netto:[24496,50630,82580],fix:[12600,12600,12600],
+  provision:[1225,2532,4129],gebuehren:[583,1205,1965],entnahme:[10088,34294,63885],mitglieder:[12,30,55],
+};
+const MEMBERSHIP_PREIS=490;
+
+/* ---- Produkte mit Inhalten ---- */
+const produkte=[
+  {n:"99-€-Leadkurs",typ:"Tripwire / Selbstliquidierer",preis:99,suffix:"",units:[30,50,80],style:"",
+   inh:["Einsteiger-Leadkurs als Eintrittstor","Deckt die Werbekosten (Self-Liquidating)","Qualifiziert echte Käufer vor"]},
+  {n:"Videokurs",typ:"Self-Study · Low-Touch",preis:1000,suffix:"",units:[2,4,6],style:"",
+   inh:["Kompletter Selbstlern-Videokurs","Kein laufender Fulfillment-Aufwand","Brücke zwischen Leadkurs und Modulen"]},
+  {n:"Modul Super Chat",typ:"Bestand / Cash — Wedge",preis:2500,suffix:"",units:[2,4,7],style:"",
+   inh:["Kompletter Aufbau Super Chat","1× Übergabe-Call","1× Check-Call nach 4 Wochen","Danach optional Membership (490 €/Mt.)"]},
+  {n:"Modul Leads / Marketing",typ:"Neukundenakquise",preis:3500,suffix:"",units:[1,2,3],style:"",
+   inh:["Funnel + Creatives + Tracking","Erste Kampagne aufgesetzt","Übergabe & Schulung zum Selbstbetrieb","Optional laufende Optimierung (Retainer)"]},
+  {n:"Modul Prozess / CRM",typ:"Infrastruktur · Zeit zurück",preis:2900,suffix:"",units:[1,2,3],style:"",
+   inh:["CRM-Aufbau + Prozessoptimierung","Mindset / Arbeitsweise","Übergabe","Danach optional Membership (490 €/Mt.)"]},
+  {n:"Komplett-Bundle",typ:"Premium-Anker · alle 3 Module",preis:6900,suffix:"",units:[1,2,3],style:"anchor",
+   inh:["Super Chat + Leads + Prozess","Für High-Intent-Käufer","Bester Gesamt-Hebel in einem Paket"]},
+  {n:"Membership",typ:"Wiederkehrend · MRR-Basis",preis:490,suffix:" / Mt.",units:[12,30,55],style:"mrr",unit_label:"aktive Mitglieder",
+   inh:["Community + Gruppen-Calls","EINE konsolidierte Stufe (kein Stapeln)","Re-Aktivierung gegen das Monat-2/3-Loch","Laufende Optimierung der Module"]},
+];
+
+/* ---- Automatisierungs-Status ---- status: done | next | human ---- */
+const autoProc=[
+  // DONE
+  {id:"a_content",s:"done",t:"Content-Planung Social Media",d:"Redaktionsplan & Upload laufen über Airtable-System.",tool:"Airtable",ki:"hoch"},
+  {id:"a_carousel",s:"done",t:"LinkedIn-Carousel-Produktion",d:"Automatisierte Carousel-Erstellung (Pillow-Skill).",tool:"Carousel-Skill",ki:"hoch"},
+  {id:"a_research",s:"done",t:"Wettbewerbs- & Content-Recherche",d:"LinkedIn / Instagram / YouTube live ausgelesen.",tool:"Scraper-Skills",ki:"hoch"},
+  {id:"a_fireflies",s:"done",t:"Call-Mitschnitte & Recaps",d:"Jedes Gespräch transkribiert & zusammengefasst.",tool:"Fireflies",ki:"hoch"},
+  {id:"a_crm",s:"done",t:"CRM & Lead-Verwaltung",d:"Pipeline, Kontakte, Opportunities zentral.",tool:"Close",ki:"hoch"},
+  {id:"a_recap",s:"done",t:"Coaching-Recap-Folien",d:"Aus Fireflies-Transkript automatisch CI-Folien.",tool:"Recap-Skill",ki:"hoch"},
+  {id:"a_lp",s:"done",t:"Angebots-Landingpage",d:"Live auf GitHub Pages, jederzeit teilbar.",tool:"GitHub Pages",ki:"hoch"},
+  // NEXT (KI-first, abhakbar)
+  {id:"n_buch",s:"next",t:"Buchhaltung",d:"Beleg-OCR + DATEV-Export ersetzt Sandra (spart 453 €/Mt.).",tool:"Buchhaltungs-Tool",ki:"hoch",talk:true},
+  {id:"n_report",s:"next",t:"Reporting / KPI-Briefing",d:"Close + Ads + Buchhaltung → dieses Dashboard + Wochen-Briefing.",tool:"Make + Close-API",ki:"hoch"},
+  {id:"n_onboard",s:"next",t:"Onboarding nach Kauf",d:"Willkommens-Sequenz, Zugänge, erste Schritte automatisch.",tool:"Make / E-Mail",ki:"hoch"},
+  {id:"n_faq",s:"next",t:"FAQ-Bot in der Community",d:"Beantwortet Standardfragen 24/7, entlastet Jasmin.",tool:"FAQ-Bot",ki:"hoch"},
+  {id:"n_react",s:"next",t:"Lead-Reaktivierung (800)",d:"KI-Copy-Sequenz + Voice-Agent ruft & terminiert.",tool:"Close Voice-Agent",ki:"hoch",talk:true},
+  {id:"n_setting",s:"next",t:"Setting / Terminierung",d:"KI-Setter qualifiziert & bucht, Mensch closed.",tool:"Voice-Agent",ki:"mittel"},
+  {id:"n_webinar",s:"next",t:"Evergreen-Webinar-Funnel",d:"Automatische Neukundenakquise rund um die Uhr.",tool:"Webinar-Tool",ki:"hoch"},
+  {id:"n_ascend",s:"next",t:"Ascension-Trigger",d:"Nach Super-Chat-Check-Call automatisch Upgrade-Angebot.",tool:"Make",ki:"hoch"},
+  // HUMAN
+  {id:"h_close",s:"human",t:"Sales-Closing-Calls",d:"Bleibt bei Ömer. KI nur Briefing davor & Recap danach.",tool:"Mensch + Fireflies",ki:"niedrig"},
+  {id:"h_care",s:"human",t:"Kundenbetreuung & Coaching",d:"Dein Qualitätsversprechen — bewusst menschlich.",tool:"Mensch",ki:"niedrig"},
+  {id:"h_lead",s:"human",t:"Strategische Entscheidungen (GL)",d:"Du entscheidest — KI assistiert (Kalender, Briefing).",tool:"KI-Assistent",ki:"mittel",talk:true},
+];
+
+const tasks=[
+  {id:"p0a",ph:0,t:"Elitewerk-Gespräch: Gewinnbeteiligung → Fixum / kleines Umsatz-%",who:"Nico",frist:"2026-06-20",st:0},
+  {id:"p0b",ph:0,t:"Sandra-Auslauf klären + Buchhaltungs-Tool auswählen",who:"Nico+Jasmin",frist:"2026-06-27",st:0},
+  {id:"p0c",ph:0,t:"Timur: Förder-Auslaufdatum fixieren, Comp auf Provision umstellen",who:"Nico",frist:"2026-06-27",st:0},
+  {id:"p0d",ph:0,t:"Tool-Stack-Audit (Leichen kündigen, Ziel 700 €)",who:"Jasmin",frist:"2026-06-27",st:0},
+  {id:"p1a",ph:1,t:"Modul-Deliverables je Modul final dokumentieren",who:"Nico+Jasmin",frist:"2026-07-04",st:0},
+  {id:"p1b",ph:1,t:"Membership-Leistungen + Gruppen-Call-Kadenz definieren",who:"Nico+Jasmin",frist:"2026-07-04",st:0},
+  {id:"p1c",ph:1,t:"Preise festzurren (99/2.500/3.500/2.900/6.900/490)",who:"Nico",frist:"2026-07-04",st:2},
+  {id:"p1d",ph:1,t:"Community-Plattform auswählen/aufsetzen",who:"Jasmin",frist:"2026-07-11",st:0},
+  {id:"p2a",ph:2,t:"Landingpage / Website je Modul",who:"Elitewerk+Nico",frist:"2026-07-18",st:0},
+  {id:"p2b",ph:2,t:"Evergreen-Webinar aufnehmen (Super Chat + Marketing)",who:"Nico",frist:"2026-07-18",st:0},
+  {id:"p2c",ph:2,t:"Reaktivierungskampagne an 800 Leads (Copy + Versand)",who:"Elitewerk+Ömer",frist:"2026-07-25",st:0},
+  {id:"p2d",ph:2,t:"Setting-/Closing-Prozess auf neue Angebote anpassen",who:"Ömer+Timur",frist:"2026-07-25",st:0},
+  {id:"p3a",ph:3,t:"1:1 → Gruppen-Calls umstellen",who:"Nico+Jasmin",frist:"2026-08-01",st:0},
+  {id:"p3b",ph:3,t:"SOPs/Templates je Modul (Auslieferung standardisieren)",who:"Jasmin",frist:"2026-08-08",st:0},
+  {id:"p3c",ph:3,t:"Kunden-Event planen (Termin, Format, Einladung)",who:"Jasmin+Nico",frist:"2026-08-08",st:0},
+  {id:"p3d",ph:3,t:"KI-Automatisierungen (Onboarding, FAQ, Reporting) festlegen",who:"Nico",frist:"2026-08-08",st:0},
+];
+const phaseInfo=[
+  {t:"Phase 0",d:"Sofort-Kosten · bis 27.06."},
+  {t:"Phase 1",d:"Angebot & Preise · bis 11.07."},
+  {t:"Phase 2",d:"Vermarktung & Funnel · bis 25.07."},
+  {t:"Phase 3",d:"Auslieferung & Skalierung · bis 08.08."},
+];
+const kpis=[
+  ["Entnahme/Monat","Netto-Umsatz − Kosten","↑ 34 k","up"],
+  ["MRR","aktive Mitglieder × 490 €","↑","up"],
+  ["Aktive Mitglieder","Membership-Bestand","↑","up"],
+  ["Modulverkäufe","Stück je Typ/Monat","↑","up"],
+  ["Fixkostenquote","Fixkosten / Netto-Umsatz","↓","down"],
+  ["Webinar-Show-Rate","Teilnehmer / Anmeldungen","↑","up"],
+  ["Close-Rate","Abschlüsse / Calls","↑","up"],
+  ["Lead-Reaktivierung","Abschlüsse aus 800 Leads","↑","up"],
+  ["CAC","Werbekosten / Neukunden","↓","down"],
+];
+const risks=[
+  ["🪤","Bundle-Kannibalisierung","Premium-Bundle (6.900 €) darf Einzelmodul-Verkäufe nicht ersetzen — Anker, nicht Standard."],
+  ["📉","Membership-Churn Monat 2–3","„Loch“ durch Energieabfall. Re-Aktivierungsmechanik genau dort einbauen."],
+  ["⏰","Überfällige Maßnahmen","Aufgaben mit roter Frist im Board sofort eskalieren."],
+  ["💸","CAC > 99-€-Einnahmen","Self-Liquidating-Funnel kippt — Leadkurs muss Ads decken (CAC ≤ Einnahmen 99-€-Kurs)."],
+];
+const toolGroups=[
+  {g:"Daten-Quellen fürs Dashboard (später live anbinden)",items:[
+    {n:"CRM – Close",d:"Leads, Opportunities, Pipeline. <b>Bereits verbunden.</b>",st:"done"},
+    {n:"Fireflies – Call-Mitschnitte",d:"Transkripte & Recaps. <b>Verbunden.</b>",st:"done"},
+    {n:"Google Drive – Dateien",d:"Decks, Specs, Handbücher. <b>Verbunden.</b>",st:"done"},
+    {n:"Werbekonten (Meta / Google Ads)",d:"Für CAC & Werbekosten-Tracking. <b>Noch anzubinden.</b>",st:"todo"},
+    {n:"Buchhaltungs-Tool",d:"Ersetzt Sandra (603 € → 150 €). <b>Tool noch wählen.</b>",st:"talk"},
+  ]},
+  {g:"Content & Marketing (läuft bereits)",items:[
+    {n:"Airtable „Content-System“",d:"Social-Media-Content-Planung. <b>Aktiv</b> inkl. Upload-Skill.",st:"done"},
+    {n:"LinkedIn-Carousel-Produktion",d:"Pillow-basierte Carousels. <b>Aktiv.</b>",st:"done"},
+    {n:"Social-Scraper (LinkedIn/IG/YT)",d:"Wettbewerbs- & Content-Recherche. <b>Verbunden.</b>",st:"done"},
+    {n:"Make.com-Automationen",d:"Blueprints vorhanden. <b>Teilweise</b> — für Onboarding/Reporting ausbauen.",st:"prog"},
+  ]},
+  {g:"Neu aufzusetzen (aus Maßnahmenplan)",items:[
+    {n:"Community-/Membership-Plattform",d:"Trägt 490-€-Membership & Gruppen-Calls. <b>Phase 1, bis 11.07.</b>",st:"todo"},
+    {n:"Evergreen-Webinar-Tool",d:"Neukundenakquise Super Chat + Marketing. <b>Phase 2, bis 18.07.</b>",st:"todo"},
+    {n:"Checkout / Zahlungsanbieter",d:"Für Kurs + Module + Membership (2 % Gebühren im Modell). <b>Prüfen.</b>",st:"talk"},
+    {n:"Landingpages je Modul",d:"Elitewerk + Nico. <b>Phase 2, bis 18.07.</b>",st:"todo"},
+  ]},
+];
+
+/* ===== STATE ===== */
+const KEY="wurth_dash_v2";
+let state=load();
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+state.scn=state.scn??1;
+state.taskSt=state.taskSt||{};
+state.checks=state.checks||{};
+state.autoDone=state.autoDone||{};
+state.funnel=state.funnel||{kontaktiert:0,webinar:0,call:0,abschluss:0};
+
+const eur=n=>Math.round(n).toLocaleString("de-DE")+" €";
+const num=n=>Math.round(n).toLocaleString("de-DE");
+const parseNum=s=>{const v=parseInt(String(s).replace(/[^\d]/g,""),10);return isNaN(v)?0:v};
+const $=s=>document.querySelector(s);
+
+/* ===== §1 Automation ===== */
+function autoIsDone(p){ if(p.s==="done")return true; if(p.s==="next")return !!state.autoDone[p.id]; return false; }
+function kiLabel(k){return k==="hoch"?"hoch":k==="mittel"?"mittel":"niedrig"}
+function renderAuto(){
+  const cols={done:[],next:[],human:[]};
+  autoProc.forEach(p=>cols[p.s].push(p));
+  const mk=(p)=>{
+    const done=autoIsDone(p);
+    const showCb=p.s==="next";
+    const cb= showCb?`<div class="cbx ${done?'done':''}" data-auto="${p.id}">${done?'✓':''}</div>`
+                    : `<span class="dn" style="background:${p.s==='done'?'var(--green)':'var(--grey-l)'}"></span>`;
+    return `<div class="acard ${done&&p.s==='next'?'done-row':''}">
+      ${cb}
+      <div class="ab">
+        <div class="at">${p.t}</div>
+        <div class="ad">${p.d}</div>
+        <div class="arow">
+          <span class="tool-tag">${p.tool}</span>
+          <span class="kibar ki-${p.ki}"><i></i></span><span class="ki-lab">KI ${kiLabel(p.ki)}</span>
+          ${p.talk?'<span class="talk-tag">mit Nico</span>':''}
+        </div>
+      </div></div>`;
+  };
+  $("#col-done").innerHTML=cols.done.map(mk).join("");
+  $("#col-next").innerHTML=cols.next.map(mk).join("");
+  $("#col-human").innerHTML=cols.human.map(mk).join("");
+
+  const nextDone=cols.next.filter(p=>state.autoDone[p.id]).length;
+  const doneTotal=cols.done.length+nextDone;
+  const automatable=cols.done.length+cols.next.length; // human excluded from %
+  $("#cDone").textContent=doneTotal;
+  $("#cNext").textContent=cols.next.length-nextDone;
+  $("#cHuman").textContent=cols.human.length;
+  $("#cnt0").textContent=cols.done.length;
+  $("#cnt1").textContent=cols.next.length;
+  $("#cnt2").textContent=cols.human.length;
+  const pctDone=Math.round(doneTotal/automatable*100);
+  const pctNext=Math.round((cols.next.length-nextDone)/automatable*100);
+  $("#barDone").style.width=pctDone+"%";
+  $("#barNext").style.width=pctNext+"%";
+  $("#autoPctLab").textContent=pctDone+" % erledigt";
+}
+
+/* ===== §2 Produkte ===== */
+function renderProducts(){
+  const s=state.scn;
+  $("#prodHint").textContent="Umsatz-Zeile = Szenario "+SCN[s]+" · alle Preise brutto";
+  $("#prodGrid").innerHTML=produkte.map(p=>{
+    const u=p.units[s], rev=p.preis*u;
+    const unitLab=p.unit_label?`${u} ${p.unit_label}`:`${u} × verkauft`;
+    return `<div class="pcard ${p.style}">
+      <div class="ph">
+        <div class="ptype">${p.typ}</div>
+        <div class="pname">${p.n}</div>
+        <div class="pprice">${num(p.preis)} €<small>${p.suffix||" brutto"}</small></div>
+      </div>
+      <div class="pbody">
+        <div class="clab">Das ist drin</div>
+        <ul>${p.inh.map(i=>`<li>${i}</li>`).join("")}</ul>
+      </div>
+      <div class="pfoot"><span class="sc">${unitLab}</span><span class="rev">${eur(rev)} / Mt.</span></div>
+    </div>`;
+  }).join("");
+}
+
+/* ===== §3 Szenario ===== */
+function renderScenario(){
+  const rows=[
+    ["Brutto-Umsatz",finanz.brutto],["Netto-Umsatz",finanz.netto],
+    ["./. Fixkosten (Ziel)",finanz.fix.map(x=>-x)],
+    ["./. Vertriebsprovision (5 %)",finanz.provision.map(x=>-x)],
+    ["./. Zahlungsgebühren (2 %)",finanz.gebuehren.map(x=>-x)],
+  ];
+  const tb=$("#scnTable tbody");tb.innerHTML="";
+  rows.forEach(([lab,arr])=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${lab}</td>`+arr.map((v,i)=>`<td class="${i===state.scn?'col-on':''}">${eur(v)}</td>`).join("");
+    tb.appendChild(tr);
+  });
+  const tr=document.createElement("tr");tr.className="total";
+  tr.innerHTML=`<td>Entnahmepotenzial / Monat</td>`+finanz.entnahme.map((v,i)=>`<td class="${i===state.scn?'col-on':''}">${eur(v)}</td>`).join("");
+  tb.appendChild(tr);
+  const tr2=document.createElement("tr");tr2.className="total";
+  tr2.innerHTML=`<td style="color:var(--grey);font-weight:600">Entnahme / Jahr</td>`+finanz.entnahme.map((v,i)=>`<td class="${i===state.scn?'col-on':''}" style="color:var(--grey)">${num(v*12)} €</td>`).join("");
+  tb.appendChild(tr2);
+  document.querySelectorAll("#scnTable thead th[data-c]").forEach(th=>th.classList.toggle("col-on",+th.dataset.c===state.scn));
+  const max=Math.max(...finanz.entnahme);
+  $("#scnBars").innerHTML=SCN.map((n,i)=>`
+    <div class="b ${i===state.scn?'on':''}">
+      <div class="t">${n}</div><div class="n">${eur(finanz.entnahme[i])}</div>
+      <div class="barv"><i style="width:${finanz.entnahme[i]/max*100}%"></i></div>
+      <div class="t" style="margin-top:8px">Umsatz ${num(finanz.brutto[i])} €</div>
+    </div>`).join("");
+}
+
+/* ===== §4 Board ===== */
+function taskStatus(t){return state.taskSt[t.id]??t.st}
+function isOverdue(t){return taskStatus(t)<2 && new Date(t.frist)<TODAY}
+function fmtFrist(f){return new Date(f).toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"})}
+let ownerFilterVal="alle";
+function renderBoard(){
+  const owners=["alle",...new Set(tasks.map(t=>t.who))];
+  $("#ownerFilter").innerHTML=owners.map(o=>`<button data-o="${o}" class="${o===ownerFilterVal?'on':''}">${o==="alle"?"Alle":o}</button>`).join("");
+  const cols=[{st:0,t:"Offen",dc:"dot-offen"},{st:1,t:"In Arbeit",dc:"dot-arbeit"},{st:2,t:"Erledigt",dc:"dot-erledigt"}];
+  const filt=tasks.filter(t=>ownerFilterVal==="alle"||t.who===ownerFilterVal);
+  $("#kanban").innerHTML=cols.map(c=>{
+    const list=filt.filter(t=>taskStatus(t)===c.st);
+    return `<div class="kcol"><h3><span class="dotc ${c.dc}"></span>${c.t}<span class="cnt">${list.length}</span></h3>
+      ${list.map(t=>{const over=isOverdue(t);
+        return `<div class="tcard ${over?'over':''}" data-id="${t.id}"><span class="hintclick">klick → weiter</span>
+          <div class="tt">${t.t}</div>
+          <div class="tm"><span class="ph2">P${t.ph}</span><span class="who">${t.who}</span>
+          <span class="fr ${over?'red':''}">📅 ${fmtFrist(t.frist)}${over?' · überfällig':''}</span></div></div>`;
+      }).join("")||'<div style="font-size:12px;color:var(--grey-l);padding:8px 2px">–</div>'}
+    </div>`;
+  }).join("");
+}
+function renderPhases(){
+  $("#phaseGrid").innerHTML=phaseInfo.map((p,i)=>{
+    const ts=tasks.filter(t=>t.ph===i);
+    const done=ts.filter(t=>taskStatus(t)===2).length;
+    const over=ts.filter(t=>isOverdue(t)).length;
+    const pct=Math.round(done/ts.length*100);
+    return `<div class="card phase"><div class="pt">${p.t}</div><div class="pd">${p.d}</div>
+      <div class="ring-wrap"><div class="ring" data-pct="${pct}%" style="--p:${pct}"></div>
+      <div class="meta"><b>${done}/${ts.length}</b> erledigt<br>
+      ${over?`<span style="color:var(--red);font-weight:700">${over} überfällig</span>`:'<span style="color:var(--green)">im Plan</span>'}</div></div></div>`;
+  }).join("");
+}
+function renderFunnel(){
+  const steps=[["kontaktiert","Kontaktiert"],["webinar","Webinar angemeldet"],["call","Call gebucht"],["abschluss","Abgeschlossen"]];
+  const f=state.funnel, vals=[f.kontaktiert,f.webinar,f.call,f.abschluss];
+  $("#funnel").innerHTML=steps.map((s,i)=>{
+    const prev=i===0?800:vals[i-1];
+    const pc=prev?Math.round(vals[i]/prev*100):0;
+    const barPc=Math.min(100,vals[i]/800*100);
+    return `<div class="fstep">${i<3?'<span class="arrow">→</span>':''}
+      <div class="fl">${s[1]}</div>
+      <input type="text" inputmode="numeric" data-f="${s[0]}" value="${num(vals[i])}">
+      <div class="pc">${i===0?'von 800 Leads':pc+'% vom Schritt davor'}</div>
+      <div class="fbar"><i style="width:${barPc}%"></i></div></div>`;
+  }).join("");
+}
+function renderKPIlist(){
+  $("#kpiBody").innerHTML=kpis.map(k=>`<tr><td>${k[0]}</td><td style="text-align:left;color:var(--grey)">${k[1]}</td><td><span class="trend ${k[3]}">${k[2]}</span></td></tr>`).join("");
+  $("#riskList").innerHTML=risks.map(r=>`<div class="flag"><div class="fi">${r[0]}</div><div><div class="ft">${r[1]}</div><div class="fd">${r[2]}</div></div></div>`).join("");
+}
+function renderTools(){
+  $("#toolList").innerHTML=toolGroups.map(g=>`<div class="tgroup">
+    <div style="font-size:12px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:.5px;margin:8px 0 4px">${g.g}</div>
+    ${g.items.map(it=>{
+      const id="tool_"+it.n.replace(/\W/g,"").slice(0,18);
+      const done=state.checks[id]??(it.st==="done");
+      const badge={done:["b-done","läuft"],prog:["b-prog","in Arbeit"],todo:["b-todo","offen"],talk:["b-talk","mit Nico"]}[it.st];
+      return `<div class="titem"><div class="cbx2 ${done?'done':''}" data-check="${id}">${done?'✓':''}</div>
+        <div class="ti"><div class="tn">${it.n}</div><div class="td">${it.d}</div></div>
+        <span class="badge ${badge[0]}">${badge[1]}</span></div>`;
+    }).join("")}</div>`).join("");
+}
+function renderTop(){
+  $("#dateChip").textContent="Stand "+STAND;
+  $("#freiIdx").textContent=eur(finanz.entnahme[state.scn]+finanz.mitglieder[state.scn]*MEMBERSHIP_PREIS);
+  document.querySelectorAll("#scnToggle button").forEach(b=>b.classList.toggle("on",+b.dataset.scn===state.scn));
+}
+function renderAll(){renderTop();renderAuto();renderProducts();renderScenario();renderBoard();renderPhases();renderFunnel();renderKPIlist();renderTools();}
+
+/* ===== EVENTS ===== */
+$("#scnToggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.scn=+b.dataset.scn;save();renderTop();renderProducts();renderScenario();});
+$("#auto").addEventListener("click",e=>{const c=e.target.closest(".cbx[data-auto]");if(!c)return;const id=c.dataset.auto;state.autoDone[id]=!state.autoDone[id];save();renderAuto();});
+$("#kanban").addEventListener("click",e=>{const c=e.target.closest(".tcard");if(!c)return;const t=tasks.find(x=>x.id===c.dataset.id);state.taskSt[t.id]=((taskStatus(t))+1)%3;save();renderBoard();renderPhases();});
+$("#ownerFilter").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ownerFilterVal=b.dataset.o;renderBoard();});
+$("#funnel").addEventListener("input",e=>{const inp=e.target.closest("input[data-f]");if(!inp)return;state.funnel[inp.dataset.f]=parseNum(inp.value);save();});
+$("#funnel").addEventListener("blur",e=>{if(e.target.closest("input[data-f]"))renderFunnel();},true);
+$("#toolList").addEventListener("click",e=>{const c=e.target.closest(".cbx2");if(!c)return;const id=c.dataset.check;state.checks[id]=!(state.checks[id]??c.classList.contains("done"));save();renderTools();});
+
+renderAll();
+</script>
+</body>
+</html>
