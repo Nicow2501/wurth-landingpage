@@ -33,7 +33,6 @@
   .seg button{border:0;background:transparent;color:var(--grey-l);font:inherit;font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:8px;cursor:pointer;transition:.15s;white-space:nowrap}
   .seg button.on{background:var(--mint);color:#062a23}
 
-  /* Sections */
   section{margin-top:38px}
   .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
   .sec-head h2{font-size:19px;font-weight:700;letter-spacing:-.2px}
@@ -42,7 +41,7 @@
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
   .pad{padding:20px}
 
-  /* ===== §1 Automatisierungs-Status ===== */
+  /* §1 Automatisierungs-Status */
   .auto-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
   .sum{padding:16px 18px;border-radius:14px;color:#fff;position:relative;overflow:hidden}
   .sum.s-done{background:linear-gradient(135deg,#1F8A4C,#177a42)}
@@ -57,7 +56,6 @@
   .progwrap .pbarbig i{display:block;height:100%}
   .progwrap .pbarbig .pdone{background:var(--green)}
   .progwrap .pbarbig .pnext{background:var(--amber)}
-
   .autoboard{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .acol{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
   .acol h3{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:4px}
@@ -74,6 +72,7 @@
   .acard .at{font-size:13px;font-weight:650;line-height:1.3}
   .acard .ad{font-size:11.5px;color:var(--grey);margin-top:3px;line-height:1.45}
   .acard .arow{display:flex;align-items:center;gap:7px;margin-top:8px;flex-wrap:wrap}
+  .acard .arow.who-row{margin-top:6px}
   .tool-tag{font-size:10px;font-weight:600;background:var(--offwhite);color:var(--grey);padding:2px 7px;border-radius:5px}
   .kibar{height:5px;width:46px;background:#eef0f1;border-radius:4px;overflow:hidden}
   .kibar>i{display:block;height:100%}
@@ -84,11 +83,36 @@
   .by-tag::before{content:"";width:6px;height:6px;border-radius:50%}
   .by-wurth{background:#1A1A1A;color:#fff}.by-wurth::before{background:var(--mint)}
   .by-elite{background:rgba(232,130,12,.14);color:#b9650a}.by-elite::before{background:var(--orange)}
-  .acard .arow.who-row{margin-top:6px}
 
-  /* ===== §2 Produkte ===== */
+  /* §2 Funnel */
+  .funnel-wrap{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 22px 18px;margin-bottom:16px}
+  .vfunnel{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .vstage{width:100%;border-radius:12px;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid transparent}
+  .vstage .vl{font-weight:700;font-size:14px;display:flex;align-items:center;gap:9px;line-height:1.25;flex-wrap:wrap}
+  .vstage .vsub{font-weight:500;font-size:11.5px;opacity:.85;display:block;margin-top:2px;width:100%}
+  .vstage .vr{font-size:13px;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .vbadge{font-size:9.5px;font-weight:800;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+  .vs-tw{background:rgba(43,218,185,.14);color:#0c4a3e}
+  .vs-opt{background:#fff;color:var(--grey);border:1px dashed #cfcfd4}
+  .vs-opt .vbadge{background:#ececef;color:var(--grey)}
+  .vs-core{background:var(--anthrazit);color:#fff}
+  .vs-core .vbadge{background:var(--mint);color:#062a23}
+  .vs-core .vr{color:var(--mint)}
+  .vs-mod{background:#fff;color:var(--ink);border:1.5px solid var(--mint)}
+  .vs-mod .vbadge{background:rgba(43,218,185,.18);color:#0c4a3e}
+  .vs-mrr{background:linear-gradient(135deg,#1F8A4C,#177a42);color:#fff}
+  .vs-mrr .vbadge{background:rgba(255,255,255,.22);color:#fff}
+  .vs-bundle{background:var(--anthrazit);color:#fff;border:2px solid var(--mint);box-shadow:0 0 0 3px rgba(43,218,185,.15)}
+  .vs-bundle .vbadge{background:var(--mint);color:#062a23}
+  .vs-bundle .vr{color:var(--mint)}
+  .vmind{margin-top:14px;display:flex;align-items:center;gap:11px;background:rgba(43,218,185,.08);border:1px solid rgba(43,218,185,.35);border-radius:11px;padding:11px 15px}
+  .vmind .vi{font-size:18px;flex:none}
+  .vmind .vt{font-size:12.8px;color:var(--ink)}.vmind .vt b{color:var(--mint-deep)}
+
+  /* §2 Produktkarten */
   .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .pcard{border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;display:flex;flex-direction:column;background:#fff;box-shadow:var(--shadow)}
+  .pcard.kern{border-color:var(--mint);box-shadow:0 0 0 1px var(--mint),var(--shadow)}
   .pcard .ph{padding:15px 16px 13px;border-bottom:1px solid var(--line);background:var(--offwhite)}
   .pcard.anchor .ph{background:var(--anthrazit);color:#fff}
   .pcard.mrr .ph{background:linear-gradient(135deg,#1F8A4C,#177a42);color:#fff}
@@ -98,11 +122,15 @@
   .pcard .pprice{font-size:24px;font-weight:780;letter-spacing:-.5px;margin-top:6px}
   .pcard .pprice small{font-size:13px;font-weight:600;color:var(--grey)}
   .pcard.anchor .pprice small,.pcard.mrr .pprice small{color:rgba(255,255,255,.7)}
+  .focus-badge{font-size:9.5px;font-weight:800;padding:3px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;display:inline-block;margin-top:8px}
+  .fb-kern{background:var(--mint);color:#062a23}
+  .fb-opt{background:#ececef;color:var(--grey)}
   .pcard .pbody{padding:14px 16px;flex:1}
   .pcard .pbody .clab{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--grey);margin-bottom:8px}
   .pcard ul{list-style:none;display:flex;flex-direction:column;gap:7px}
   .pcard li{font-size:12.5px;display:flex;gap:8px;align-items:flex-start;line-height:1.4}
   .pcard li::before{content:"✓";color:var(--mint-deep);font-weight:800;flex:none}
+  .pcard li.tip::before{content:"💡";font-size:11px}
   .pcard .sold{padding:11px 16px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;font-size:12px}
   .pcard .sold .sl{color:var(--grey);font-weight:600}
   .pcard .sold .sv{font-weight:780;font-size:17px;font-variant-numeric:tabular-nums;color:var(--mint-deep);outline:none;min-width:18px;text-align:right;border-bottom:1.5px dashed var(--line);cursor:text}
@@ -116,31 +144,6 @@
   .design-note{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
   .design-note .dn-item{flex:1;min-width:220px;border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:#fff;font-size:12.5px;color:var(--grey)}
   .design-note .dn-item b{color:var(--ink)}
-
-  /* Angebots-Funnel / Wertleiter */
-  .funnel-wrap{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 22px 18px;margin-bottom:16px}
-  .vfunnel{display:flex;flex-direction:column;align-items:center;gap:8px}
-  .vstage{width:100%;border-radius:12px;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid transparent}
-  .vstage .vl{font-weight:700;font-size:14px;display:flex;align-items:center;gap:9px;line-height:1.25}
-  .vstage .vsub{font-weight:500;font-size:11.5px;opacity:.85;display:block;margin-top:2px}
-  .vstage .vr{font-size:13px;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
-  .vbadge{font-size:9.5px;font-weight:800;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
-  .vs-top{background:#f0f1f2;color:var(--grey);border-color:var(--line)}
-  .vs-tw{background:rgba(43,218,185,.14);color:#0c4a3e}
-  .vs-core{background:var(--anthrazit);color:#fff}
-  .vs-core .vbadge{background:var(--mint);color:#062a23}
-  .vs-core .vr{color:var(--mint)}
-  .vs-opt{background:#fff;color:var(--grey);border:1px dashed #cfcfd4}
-  .vs-opt .vbadge{background:#ececef;color:var(--grey)}
-  .vs-mrr{background:linear-gradient(135deg,#1F8A4C,#177a42);color:#fff}
-  .vs-mrr .vbadge{background:rgba(255,255,255,.22);color:#fff}
-  .vmind{margin-top:14px;display:flex;align-items:center;gap:11px;background:rgba(43,218,185,.08);border:1px solid rgba(43,218,185,.35);border-radius:11px;padding:11px 15px}
-  .vmind .vi{font-size:18px;flex:none}
-  .vmind .vt{font-size:12.8px;color:var(--ink)}.vmind .vt b{color:var(--mint-deep)}
-  .focus-badge{font-size:9.5px;font-weight:800;padding:3px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;display:inline-block;margin-top:8px}
-  .fb-kern{background:var(--mint);color:#062a23}
-  .fb-opt{background:#ececef;color:var(--grey)}
-  .pcard.kern{border-color:var(--mint);box-shadow:0 0 0 1px var(--mint),var(--shadow)}
 
   /* Einschätzung */
   .take{background:var(--anthrazit);color:#fff;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
@@ -162,7 +165,7 @@
   .take .week li b{color:#eafff4}
   .take .sig{margin-top:16px;font-size:11.5px;color:var(--grey-l);font-style:italic}
 
-  /* Tables / scenario */
+  /* Szenario */
   table{width:100%;border-collapse:collapse;font-size:13.5px}
   th,td{text-align:right;padding:11px 14px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
   th:first-child,td:first-child{text-align:left}
@@ -172,6 +175,10 @@
   th.col-on{color:var(--mint-deep)}
   tr.total td{font-weight:760;font-size:15px;background:#fafafa}
   tr.total td.col-on{background:rgba(43,218,185,.14)}
+  .period-toggle{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .period-toggle .seg2{display:inline-flex;background:var(--offwhite);border:1px solid var(--line);border-radius:9px;padding:3px}
+  .period-toggle .seg2 button{border:0;background:transparent;color:var(--grey);font:inherit;font-size:12.5px;font-weight:700;padding:6px 14px;border-radius:7px;cursor:pointer}
+  .period-toggle .seg2 button.on{background:var(--ink);color:#fff}
   .scn-bars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:18px}
   .scn-bars .b{padding:14px;border:1px solid var(--line);border-radius:12px;text-align:center}
   .scn-bars .b.on{border-color:var(--mint);background:rgba(43,218,185,.06)}
@@ -181,9 +188,6 @@
   .scn-bars .b .barv>i{display:block;height:100%;background:var(--mint)}
 
   /* Kanban */
-  .filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
-  .filters button{border:1px solid var(--line);background:#fff;color:var(--grey);font:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:20px;cursor:pointer}
-  .filters button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
   .kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .kcol{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;min-height:120px}
   .kcol h3{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:12px}
@@ -193,18 +197,19 @@
   .tcard{border:1px solid var(--line);border-radius:11px;padding:11px 12px;margin-bottom:9px;cursor:pointer;transition:.12s;background:#fff;position:relative}
   .tcard:hover{border-color:var(--mint);box-shadow:0 4px 12px rgba(0,0,0,.05)}
   .tcard.over{border-left:3px solid var(--red)}
-  .tcard .tt{font-size:13px;font-weight:600;line-height:1.35}
-  .tcard .tm{display:flex;align-items:center;gap:8px;margin-top:9px;font-size:11.5px;color:var(--grey);flex-wrap:wrap}
-  .tcard .who{font-weight:700;color:var(--ink)}
-  .tcard .ph2{font-size:10px;font-weight:700;color:var(--mint-deep);background:rgba(31,138,76,.1);padding:2px 6px;border-radius:5px}
-  .tcard .fr{font-variant-numeric:tabular-nums}
-  .tcard .fr.red{color:var(--red);font-weight:700}
-  .tcard .hintclick{position:absolute;right:10px;top:10px;font-size:10px;color:var(--grey-l);opacity:0;transition:.12s}
-  .tcard:hover .hintclick{opacity:1}
-  .tcard{cursor:grab}
-  .tcard.dragging{opacity:.45;cursor:grabbing}
+  .tcard.dragging{opacity:.45}
   .kcol.dragover{background:rgba(43,218,185,.07);outline:2px dashed var(--mint);outline-offset:-4px}
-  .tcard .grip{color:var(--grey-l);font-size:12px;margin-right:4px}
+  .tcard .tt{font-size:13px;font-weight:600;line-height:1.35;display:flex;gap:6px}
+  .tcard .grip{color:var(--grey-l);font-size:12px;cursor:grab}
+  .tcard .tm{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:11.5px;color:var(--grey);flex-wrap:wrap}
+  .tcard .ph2{font-size:10px;font-weight:700;color:var(--mint-deep);background:rgba(31,138,76,.1);padding:2px 6px;border-radius:5px}
+  .asg{font-size:10px;font-weight:700;color:#fff;padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .asg.none{background:#ececed;color:var(--grey-l);font-weight:600}
+  .cdate{font:inherit;font-size:11px;color:var(--grey);border:1px solid var(--line);border-radius:6px;padding:2px 5px;background:#fff;cursor:pointer;font-variant-numeric:tabular-nums}
+  .cdate.red{color:var(--red);border-color:#f3c0c2}
+  .ccount{font-size:11px;color:var(--grey-l)}
+  .tcard .openhint{position:absolute;right:9px;top:9px;font-size:10px;color:var(--grey-l);opacity:0;transition:.12s}
+  .tcard:hover .openhint{opacity:1}
 
   /* Phasen */
   .phases{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
@@ -216,26 +221,7 @@
   .ring::after{content:attr(data-pct);width:46px;height:46px;background:#fff;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:760}
   .phase .meta{font-size:12px;color:var(--grey)}.phase .meta b{color:var(--ink)}
 
-  /* Funnel */
-  .funnel{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-  .fstep{border:1px solid var(--line);border-radius:13px;padding:16px;text-align:center;position:relative}
-  .fstep .fl{font-size:12px;color:var(--grey);font-weight:600}
-  .fstep input{width:100%;border:0;text-align:center;font-size:30px;font-weight:760;color:var(--ink);outline:none;font-variant-numeric:tabular-nums;background:transparent;margin-top:6px}
-  .fstep input:focus{color:var(--mint-deep)}
-  .fstep .pc{font-size:11.5px;color:var(--mint-deep);font-weight:700;margin-top:4px}
-  .fstep .fbar{height:7px;background:#eef0f1;border-radius:5px;margin-top:10px;overflow:hidden}
-  .fstep .fbar>i{display:block;height:100%;background:linear-gradient(90deg,var(--mint),var(--mint-deep))}
-  .fstep .arrow{position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--line);font-size:18px;z-index:2}
-
-  .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:start}
-  .kpilist td:first-child{font-weight:600}
-  .trend{font-size:13px;font-weight:760}.trend.up{color:var(--green)}.trend.down{color:var(--red)}
-  .flag{display:flex;gap:12px;padding:13px 4px;border-bottom:1px solid var(--line)}
-  .flag:last-child{border-bottom:0}
-  .flag .fi{width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center;font-size:15px;background:rgba(245,166,35,.13)}
-  .flag .ft{font-size:13.5px;font-weight:650}.flag .fd{font-size:12.5px;color:var(--grey);margin-top:2px}
-
-  /* Tool checklist */
+  /* Tools */
   .tgroup{margin-bottom:8px}
   .titem{display:flex;align-items:flex-start;gap:13px;padding:13px 4px;border-bottom:1px solid var(--line)}
   .titem:last-child{border-bottom:0}
@@ -254,13 +240,42 @@
   .foot{margin-top:46px;text-align:center;color:var(--grey-l);font-size:12px;line-height:1.7}
   .foot b{color:var(--grey)}
 
+  /* Modal (Trello-Stil) */
+  .modal-overlay{position:fixed;inset:0;background:rgba(15,15,18,.55);z-index:100;display:flex;align-items:flex-start;justify-content:center;padding:48px 18px;overflow-y:auto}
+  .modal-overlay.hidden{display:none}
+  .modal{background:#fff;border-radius:16px;max-width:560px;width:100%;box-shadow:0 24px 70px rgba(0,0,0,.35);overflow:hidden}
+  .modal-head{background:var(--anthrazit);color:#fff;padding:18px 20px;position:relative}
+  .modal-head .mt{font-size:16px;font-weight:730;line-height:1.35;padding-right:30px}
+  .modal-head .mp{font-size:11px;color:var(--grey-l);margin-top:6px;text-transform:uppercase;letter-spacing:.5px}
+  .modal-x{position:absolute;right:14px;top:14px;width:28px;height:28px;border-radius:8px;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:18px;cursor:pointer;line-height:1}
+  .modal-body{padding:18px 20px 22px}
+  .msec{margin-bottom:18px}
+  .msec>label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--grey);display:block;margin-bottom:8px}
+  .asg-row{display:flex;gap:7px;flex-wrap:wrap}
+  .asg-btn{font-size:12px;font-weight:700;color:#fff;padding:6px 13px;border-radius:20px;border:2px solid transparent;cursor:pointer;opacity:.45;transition:.12s}
+  .asg-btn.on{opacity:1;box-shadow:0 0 0 2px #fff,0 0 0 4px currentColor}
+  .asg-btn.clear{background:#ececed;color:var(--grey);opacity:1}
+  .asg-btn.clear.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--grey-l)}
+  .status-row{display:flex;gap:7px;flex-wrap:wrap}
+  .status-row button{font-size:12px;font-weight:700;padding:7px 14px;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--grey);cursor:pointer}
+  .status-row button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .mdate{font:inherit;font-size:14px;border:1px solid var(--line);border-radius:9px;padding:8px 12px;color:var(--ink)}
+  .comment-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+  .cmt{background:var(--offwhite);border-radius:10px;padding:9px 12px;font-size:12.5px;color:var(--ink);position:relative}
+  .cmt .cmeta{font-size:10.5px;color:var(--grey-l);margin-top:5px}
+  .cmt .cdel{position:absolute;right:8px;top:7px;border:0;background:transparent;color:var(--grey-l);cursor:pointer;font-size:13px}
+  .comment-empty{font-size:12px;color:var(--grey-l);padding:4px 0 8px}
+  .comment-input{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:13px;resize:vertical;min-height:62px;outline:none}
+  .comment-input:focus{border-color:var(--mint)}
+  .comment-add{margin-top:8px;background:var(--mint-deep);color:#fff;border:0;border-radius:9px;padding:9px 16px;font:inherit;font-weight:700;font-size:13px;cursor:pointer}
+
   @media(max-width:980px){
-    .auto-summary,.autoboard,.prod-grid,.phases,.funnel{grid-template-columns:repeat(2,1fr)}
+    .auto-summary,.autoboard,.prod-grid,.phases{grid-template-columns:repeat(2,1fr)}
     .kanban{grid-template-columns:1fr}
-    .grid2{grid-template-columns:1fr}
+    .take-grid{grid-template-columns:1fr}
   }
   @media(max-width:560px){
-    .auto-summary,.autoboard,.prod-grid,.scn-bars,.phases,.funnel{grid-template-columns:1fr}
+    .auto-summary,.autoboard,.prod-grid,.scn-bars,.phases{grid-template-columns:1fr}
     .freiheit{display:none}
   }
 </style>
@@ -276,7 +291,7 @@
         <button data-scn="1" class="on">Realistisch</button>
         <button data-scn="2">Optimistisch</button>
       </div>
-      <div class="freiheit"><b id="freiIdx">–</b><span>Freiheits-Index · Ziel/Mt.</span></div>
+      <div class="freiheit"><b id="topUmsatz">–</b><span>Brutto-Umsatz · Ziel/Mt.</span></div>
       <div class="date-chip" id="dateChip">Stand –</div>
     </div>
   </div>
@@ -284,10 +299,10 @@
 
 <div class="wrap">
 
-  <!-- 1. AUTOMATISIERUNGS-STATUS -->
+  <!-- 1. WO STEHEN WIR -->
   <section id="auto">
     <div class="sec-head">
-      <span class="num">1</span><h2>Wo stehen wir? — Automatisierungs-Status</h2>
+      <span class="num">1</span><h2>Wo stehen wir? — Status & wer ist zuständig</h2>
       <span class="hint">Was läuft schon · was kommt als KI-first · was bleibt bewusst menschlich</span>
     </div>
     <div class="auto-summary">
@@ -302,18 +317,15 @@
     <div class="autoboard">
       <div class="acol">
         <h3 class="h-done"><span class="dotc dot-erledigt"></span>Bereits automatisiert <span class="cnt" id="cnt0">0</span></h3>
-        <div class="sub">Läuft heute schon im Tagesgeschäft.</div>
-        <div id="col-done"></div>
+        <div class="sub">Läuft heute schon im Tagesgeschäft.</div><div id="col-done"></div>
       </div>
       <div class="acol">
         <h3 class="h-next"><span class="dotc dot-arbeit"></span>Als Nächstes: KI-first <span class="cnt" id="cnt1">0</span></h3>
-        <div class="sub">Hier holen wir die größten Hebel. Abhaken, sobald erledigt.</div>
-        <div id="col-next"></div>
+        <div class="sub">Hier holen wir die größten Hebel. Abhaken, sobald erledigt.</div><div id="col-next"></div>
       </div>
       <div class="acol">
         <h3 class="h-human"><span class="dotc dot-offen"></span>Bleibt menschlich <span class="cnt" id="cnt2">0</span></h3>
-        <div class="sub">Bewusste Entscheidung — KI nur im Hintergrund.</div>
-        <div id="col-human"></div>
+        <div class="sub">Bewusste Entscheidung — KI nur im Hintergrund.</div><div id="col-human"></div>
       </div>
     </div>
     <div class="legend">
@@ -324,43 +336,47 @@
     </div>
   </section>
 
-  <!-- 2. ANGEBOT, FUNNEL & PREISE -->
+  <!-- 2. ANGEBOT & FUNNEL -->
   <section id="produkte">
     <div class="sec-head">
       <span class="num">2</span><h2>Angebot & Funnel</h2>
-      <span class="hint">Kern: Bestand aktivieren · Prozess · Mindset — Meta/Neukunden ist der optionale Verstärker</span>
+      <span class="hint">Kern: Bestand aktivieren · Prozess · Mindset — Leads ist Modul 2, kein Pflicht-Einstieg</span>
     </div>
 
     <div class="funnel-wrap">
       <div class="vfunnel">
-        <div class="vstage vs-top" style="max-width:100%">
-          <div class="vl">So wirst du gefunden<span class="vsub">Organischer Content (LinkedIn) im Fokus · Meta-Ads optional dazu</span></div>
-          <span class="vbadge">Aufmerksamkeit</span>
-        </div>
-        <div class="vstage vs-tw" style="max-width:90%">
-          <div class="vl">99-€-Leadkurs<span class="vsub">Einstieg, deckt die Werbung (Self-Liquidating), qualifiziert Käufer</span></div>
+        <div class="vstage vs-tw" style="max-width:100%">
+          <div class="vl">99-€-Leadkurs — die Leadmaschine<span class="vsub">„Wie generiere ich planbar Leads & neue Kunden?“ · deckt die Werbung, qualifiziert Käufer</span></div>
           <span class="vr">99 €</span>
         </div>
-        <div class="vstage vs-core" style="max-width:78%">
-          <div class="vl"><span class="vbadge">★ Kern</span>Super Chat — Anfragen aus dem Bestand<span class="vsub">Schneller Cash ohne neue Leads · der Einstieg, der sofort wirkt</span></div>
+        <div class="vstage vs-opt" style="max-width:90%">
+          <div class="vl"><span class="vbadge">optional</span>1.000-€-Videokurs<span class="vsub">Selbstlern-Kurs „wie schalte ich Werbeanzeigen“ · im Super Chat & Bundle automatisch inkl.</span></div>
+          <span class="vr">1.000 €</span>
+        </div>
+        <div class="vstage vs-core" style="max-width:80%">
+          <div class="vl"><span class="vbadge">★ Kern</span>Modul 1 — Super Chat<span class="vsub">Fundament aufbauen → Team & Service → Bestand vertrieblich aktivieren</span></div>
           <span class="vr">2.500 €</span>
         </div>
-        <div class="vstage vs-core" style="max-width:66%">
-          <div class="vl"><span class="vbadge">★ Kern</span>Prozess & CRM + Mindset<span class="vsub">Raus aus der Inhaber-Abhängigkeit — die eigentliche Transformation</span></div>
+        <div class="vstage vs-core" style="max-width:72%">
+          <div class="vl"><span class="vbadge">★ Kern</span>Modul 3 — Prozess & Mindset<span class="vsub">CRM, Agenturhandbuch, Einstellen & Prozesse — raus aus der Inhaber-Abhängigkeit</span></div>
           <span class="vr">2.900 €</span>
         </div>
-        <div class="vstage vs-opt" style="max-width:62%">
-          <div class="vl"><span class="vbadge">optional</span>Leads / Meta — Neukunden<span class="vsub">Erst zünden, wenn Bestand & Prozess laufen — Verstärker, nicht Hauptthema</span></div>
+        <div class="vstage vs-mod" style="max-width:66%">
+          <div class="vl"><span class="vbadge">Modul 2</span>Leads — Werbeanzeigen<span class="vsub">2 Lead-Maschinen + Creatives, verknüpft mit Super Chat / CRM</span></div>
           <span class="vr">3.500 €</span>
         </div>
-        <div class="vstage vs-mrr" style="max-width:50%">
-          <div class="vl"><span class="vbadge">MRR</span>Membership — dranbleiben<span class="vsub">Community + Gruppen-Calls</span></div>
+        <div class="vstage vs-mrr" style="max-width:58%">
+          <div class="vl"><span class="vbadge">MRR</span>Membership — dranbleiben<span class="vsub">Community + Gruppen-Calls · optional nach jedem Modul</span></div>
           <span class="vr">490 €/Mt.</span>
+        </div>
+        <div class="vstage vs-bundle" style="max-width:66%">
+          <div class="vl"><span class="vbadge">★ Alles inkl.</span>Komplett-Bundle<span class="vsub">Modul 1 + 2 + 3 + Membership · 50 % Anzahlung · 1× 1:1-Call/Monat</span></div>
+          <span class="vr">6.900 €</span>
         </div>
       </div>
       <div class="vmind">
         <span class="vi">🧠</span>
-        <div class="vt"><b>Mindset zieht sich durch alles</b> — vom ersten Super-Chat-Call bis in die Membership. Es ist nicht ein Modul, sondern die Klammer, die Umsetzung überhaupt erst möglich macht.</div>
+        <div class="vt"><b>Mindset zieht sich durch alles</b> — vom ersten Super-Chat-Call bis in die Membership. Kein Modul, sondern die Klammer, die Umsetzung überhaupt möglich macht.</div>
       </div>
     </div>
 
@@ -370,9 +386,9 @@
     </div>
     <div class="prod-grid" id="prodGrid"></div>
     <div class="design-note">
-      <div class="dn-item"><b>Neue Reihenfolge:</b> Super Chat (Bestand) → Prozess & Mindset → Membership. <b>Leads/Meta ist optional</b> — der Verstärker, wenn der Kern steht, nicht der Einstieg.</div>
+      <div class="dn-item"><b>Reihenfolge:</b> 99-€-Leadkurs → (1.000-€-Videokurs optional) → Super Chat & Prozess (Kern) → Leads (Modul 2) → Komplett-Bundle (alles inkl. Membership).</div>
+      <div class="dn-item"><b>Keine 1:1-Beratung mehr standardmäßig</b> — nur auf Ansage, dann 1.000 €. Beim Bundle: 50 % Anzahlung + 1× 1:1-Call/Monat inkl.</div>
       <div class="dn-item"><b>Membership = EINE Stufe</b> (nicht pro Modul stapeln → verhindert Churn). Umsetzung in Gruppen-Calls, nicht 1:1.</div>
-      <div class="dn-item"><b>„Loch" Monat 2–3</b> ist normaler Energieabfall → Re-Aktivierungsmechanik genau dort in die Membership einbauen.</div>
     </div>
   </section>
 
@@ -385,41 +401,41 @@
     </div>
     <div class="take">
       <div class="verdict">
-        Kurz gesagt: <b>Das Konzept ist richtig gebaut</b> — Einstieg über schnellen Cash aus dem Bestand, dann Ausbau, dann wiederkehrende Membership. Das ist genau die Reihenfolge, die funktioniert. Die zwei Stellen, an denen solche Modelle scheitern, sind aber fast immer dieselben: <b>man baut zu lange, bevor man verkauft</b> — und <b>man unterschätzt den Membership-Churn</b>. Wenn du diese zwei im Griff hast, geht es deutlich schneller.
+        Kurz gesagt: <b>Das Konzept ist richtig gebaut</b> — Einstieg über schnellen Cash aus dem Bestand (Super Chat), Tiefe über Prozess & Mindset, wiederkehrend über die Membership. Genau die richtige Reihenfolge. Der Hebel liegt jetzt nicht mehr im Nachdenken, sondern im <b>Verkaufen an die 800 Bestands-Leads</b> — und darin, die Auslieferung skalierbar zu halten.
       </div>
       <div class="take-grid">
         <div class="tk good">
           <div class="th">✓ Das ist stark</div>
           <ul>
             <li><b>Der Kern stimmt: Bestand + Prozess + Mindset</b>, nicht kalte Meta-Leads. Das ist der echte Schmerz deiner Zielgruppe — und das, was du am glaubwürdigsten lieferst.</li>
-            <li><b>Super Chat als Einstieg</b> ist der richtige Wedge: schnellster sichtbarer ROI, niedrigstes Risiko, am leichtesten zu verkaufen.</li>
+            <li><b>Super Chat als Einstieg</b>: schnellster sichtbarer ROI, niedrigstes Risiko, am leichtesten zu verkaufen.</li>
             <li><b>Membership = EINE Stufe</b> + Gruppen-Calls statt 1:1. Genau so kommst du als Engpass raus.</li>
           </ul>
         </div>
         <div class="tk risk">
-          <div class="th">⚠ Größtes Risiko</div>
+          <div class="th">⚠ Das eine Restrisiko</div>
           <ul>
-            <li><b>Zu viel bauen vor dem ersten Verkauf.</b> Webinar, Funnel, Community im Juli zu perfektionieren, bevor das modulare Angebot überhaupt an echten Käufern getestet ist — das frisst Zeit & Geld.</li>
-            <li><b>Membership-Churn Monat 2–3.</b> Ohne fest eingebaute Quick-Win-/Re-Aktivierungs­mechanik bröckelt die MRR genau da, wo dein eigentlicher Wert sitzt.</li>
-            <li><b>CAC entgleist still.</b> Wenn der 99-€-Kurs die Ads nicht mehr deckt, kippt das ganze Modell — und du merkst es erst spät.</li>
+            <li><b>Fulfillment-Kapazität.</b> Jedes Modul ist ein Done-with-you-Aufbau (Fundament, CRM, Agenturhandbuch). Starten mehrere Kunden gleichzeitig, wird die <b>Auslieferung</b> der Flaschenhals — nicht der Verkauf.</li>
+            <li><b>Gegenmittel:</b> SOPs/Templates & Agenturhandbuch so früh wie möglich standardisieren, damit das <b>Team baut</b>, nicht du.</li>
+            <li><span style="color:var(--grey-l)">Churn, CAC & „zu viel bauen“ hast du bereits adressiert — die hake ich ab.</span></li>
           </ul>
         </div>
         <div class="tk fast">
           <div class="th">⚡ Schneller vorankommen</div>
           <ul>
-            <li><b>800 Leads ZUERST</b>, nicht in Phase 2. Reaktivierung ist billiger als kalte Ads, bringt sofort Cash und testet die neue Botschaft. Notfalls erst manuell verkaufen.</li>
-            <li><b>Verkaufen vor Automatisieren.</b> Erst Käufer & Cash, dann Funnel/Community ausbauen — nicht umgekehrt.</li>
-            <li><b>Buchhaltungs-Tool sofort</b> (spart ab Tag 1 453 €/Mt.) und <b>1:1 → Gruppen-Calls früher</b> ziehen.</li>
+            <li><b>800 Bestands-Leads ZUERST</b> mit dem Super-Chat-Angebot — auch erstmal ohne fertigen Funnel. Erster Cash rein.</li>
+            <li><b>Verkaufen vor Automatisieren.</b> Erst Käufer & Cash, dann Webinar/Funnel ausbauen.</li>
+            <li><b>Buchhaltungs-Tool sofort</b> (453 €/Mt.) und <b>1:1 → Gruppen-Calls</b> früh ziehen.</li>
           </ul>
         </div>
       </div>
       <div class="week">
         <div class="wh">Wenn ich du wäre — diese Woche</div>
         <ol>
-          <li><b>Angebot & Preise final festzurren</b> (steht eh, nur bestätigen) — damit du sofort verkaufsfähig bist.</li>
-          <li><b>Buchhaltungs-Tool entscheiden</b> (sevDesk/lexoffice) → 453 €/Mt. Einsparung gestartet, Sandra-Auslauf terminiert.</li>
-          <li><b>Reaktivierung der 800 Leads starten</b> — mit dem Super-Chat-Angebot, auch erstmal ohne fertigen Funnel. Erster Cash rein.</li>
-          <li><b>Wochen-Check fixieren:</b> nur EINE Zahl im Blick — <b>Freiheits-Index (Entnahme + MRR)</b>.</li>
+          <li><b>Angebot & Preise final bestätigen</b> — damit du sofort verkaufsfähig bist.</li>
+          <li><b>Buchhaltungs-Tool entscheiden</b> (sevDesk/lexoffice) → Einsparung & Sandra-Auslauf terminiert.</li>
+          <li><b>Reaktivierung der 800 Leads starten</b> — Super-Chat-Angebot, auch ohne fertigen Funnel.</li>
+          <li><b>Auslieferung absichern:</b> erste SOP/Checkliste pro Modul, damit das Team baut.</li>
         </ol>
       </div>
       <div class="sig">— Eingebaut auf deinen Wunsch: meine Beratersicht. Kein Ersatz für deine Entscheidung, sondern ein schnellerer Startpunkt.</div>
@@ -428,9 +444,16 @@
 
   <!-- 3. SZENARIO -->
   <section id="szenario">
-    <div class="sec-head"><span class="num">3</span><h2>Szenario-Vergleich</h2>
-      <span class="hint">Aktives Szenario steuert die Produkt- & Umsatzzahlen oben.</span></div>
+    <div class="sec-head"><span class="num">3</span><h2>Umsatz-Szenarien</h2>
+      <span class="hint">Werte umschaltbar pro Monat / Jahr · Szenario oben wählen</span></div>
     <div class="card pad">
+      <div class="period-toggle">
+        <span style="font-size:12.5px;font-weight:700;color:var(--grey)">Werte:</span>
+        <div class="seg2" id="periodToggle">
+          <button data-p="monat" class="on">pro Monat</button>
+          <button data-p="jahr">pro Jahr</button>
+        </div>
+      </div>
       <table id="scnTable">
         <thead><tr><th>Kennzahl</th><th data-c="0">Konservativ</th><th data-c="1">Realistisch</th><th data-c="2">Optimistisch</th></tr></thead>
         <tbody></tbody>
@@ -442,42 +465,20 @@
   <!-- 4. MASSNAHMEN -->
   <section id="board">
     <div class="sec-head"><span class="num">4</span><h2>Maßnahmen-Board</h2>
-      <span class="hint">Karte ziehen (Desktop) oder antippen — wandert offen → in Arbeit → erledigt.</span></div>
+      <span class="hint">Karte ziehen zum Verschieben · Karte anklicken öffnet Details (Person zuweisen, Kommentare). Datum direkt auf der Karte änderbar.</span></div>
     <div class="kanban" id="kanban"></div>
   </section>
 
   <!-- 5. PHASEN -->
   <section id="phasen">
     <div class="sec-head"><span class="num">5</span><h2>Fortschritt je Phase</h2>
-      <span class="hint">% erledigter Aufgaben · überfällige in Rot</span></div>
+      <span class="hint">automatisch aus dem Kanban · überfällige in Rot</span></div>
     <div class="phases" id="phaseGrid"></div>
   </section>
 
-  <!-- 6. LEADS -->
-  <section id="leads">
-    <div class="sec-head"><span class="num">6</span><h2>Lead-Tracker: 800 reaktivieren</h2>
-      <span class="hint">Zahlen editierbar · Conversion vom Schritt davor</span></div>
-    <div class="card pad"><div class="funnel" id="funnel"></div></div>
-  </section>
-
-  <!-- 7. KPIs -->
-  <section id="kpiliste">
-    <div class="sec-head"><span class="num">7</span><h2>KPIs & Risiko-Flags</h2></div>
-    <div class="grid2">
-      <div class="card pad">
-        <table class="kpilist"><thead><tr><th>KPI</th><th style="text-align:left">Definition</th><th>Ziel</th></tr></thead>
-          <tbody id="kpiBody"></tbody></table>
-      </div>
-      <div class="card pad">
-        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--red)">⚠︎ Risiko-Flags</div>
-        <div id="riskList"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8. TOOLS -->
+  <!-- 6. TOOLS -->
   <section id="tools">
-    <div class="sec-head"><span class="num">8</span><h2>Tool-Stack & Setup-Checkliste</h2>
+    <div class="sec-head"><span class="num">6</span><h2>Tool-Stack & Setup-Checkliste</h2>
       <span class="hint">Abhaken zum Erledigen</span></div>
     <div class="card pad" id="toolList"></div>
     <div class="legend">
@@ -489,8 +490,29 @@
   </section>
 
   <div class="foot">
-    Wurth Consulting · Steuerungs-Dashboard — aus <b>Wurth_Dashboard_Spec.md</b> (Stand 13.06.2026).<br>
-    Eingaben (Status, Häkchen, Leads) werden lokal im Browser gespeichert.
+    Wurth Consulting · Steuerungs-Dashboard — Stand <b>13.06.2026</b>.<br>
+    Eingaben (Status, Zuweisungen, Kommentare, Häkchen, Datum) werden lokal im Browser gespeichert.
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay hidden" id="taskModal">
+  <div class="modal">
+    <div class="modal-head">
+      <button class="modal-x" id="modalX">×</button>
+      <div class="mt" id="mTitle"></div>
+      <div class="mp" id="mPhase"></div>
+    </div>
+    <div class="modal-body">
+      <div class="msec"><label>Zuständig</label><div class="asg-row" id="mAsg"></div></div>
+      <div class="msec"><label>Fällig am</label><br><input type="date" class="mdate" id="mDate"></div>
+      <div class="msec"><label>Status</label><div class="status-row" id="mStatus"></div></div>
+      <div class="msec"><label>Kommentare</label>
+        <div class="comment-list" id="mComments"></div>
+        <textarea class="comment-input" id="mCommentInput" placeholder="Kommentar schreiben …"></textarea>
+        <button class="comment-add" id="mCommentAdd">Kommentar hinzufügen</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -501,31 +523,32 @@ const SCN=["Konservativ","Realistisch","Optimistisch"];
 
 const finanz={
   brutto:[29150,60250,98270],netto:[24496,50630,82580],fix:[12600,12600,12600],
-  provision:[1225,2532,4129],gebuehren:[583,1205,1965],entnahme:[10088,34294,63885],mitglieder:[12,30,55],
+  provision:[1225,2532,4129],gebuehren:[583,1205,1965],
 };
-const MEMBERSHIP_PREIS=490;
 
-/* ---- Produkte mit Inhalten ---- */
 const produkte=[
-  {id:"pr_99",n:"99-€-Leadkurs",typ:"Tripwire / Selbstliquidierer",preis:99,suffix:"",units:[30,50,80],style:"",verkauft:0,
-   inh:["Einsteiger-Leadkurs als Eintrittstor","Deckt die Werbekosten (Self-Liquidating)","Qualifiziert echte Käufer vor","Schnellster Hebel: Anfragen aus dem Bestand statt erst neue Leads"]},
-  {id:"pr_video",n:"Videokurs",typ:"Self-Study · Low-Touch",preis:1000,suffix:"",units:[2,4,6],style:"",verkauft:1,
-   inh:["Kompletter Selbstlern-Videokurs","Kein laufender Fulfillment-Aufwand","Brücke zwischen Leadkurs und Modulen"]},
-  {id:"pr_chat",n:"Modul 1 — Super Chat",typ:"Anfragen aus dem Bestand · Wedge",preis:2500,suffix:"",units:[2,4,7],style:"",verkauft:0,focus:"kern",
-   inh:["Bestandskundenstamm aktiviert → in Tagen konkrete Anfragen & Termine","Komplett aufgebaut & übergeben","1× Check-Call nach 4 Wochen","Danach optional Membership (490 €/Mt.)"]},
-  {id:"pr_leads",n:"Modul 2 — Leads",typ:"Planbar neue Kunden · optionaler Verstärker",preis:3500,suffix:"",units:[1,2,3],style:"",verkauft:0,focus:"opt",
-   inh:["System für konstant frische Anfragen (Werbung + organisch)","Funnel + Creatives + Tracking, erste Kampagne","Übergabe & Begleitung beim Selbstbetrieb","Optional laufende Optimierung (Retainer)"]},
-  {id:"pr_prozess",n:"Modul 3 — Prozess & Mindset",typ:"Dein System, CRM & Haltung · Zeit zurück",preis:2900,suffix:"",units:[1,2,3],style:"",verkauft:0,focus:"kern",
-   inh:["Klare Prozesse + sauberes CRM, das dein Team führt","Mindset/Haltung: raus aus der Inhaber-Abhängigkeit","Damit nichts mehr versandet","„Rein, auf die Zahlen schauen, raus.“","Danach optional Membership (490 €/Mt.)"]},
-  {id:"pr_bundle",n:"Komplett-Bundle",typ:"Premium-Anker · alle 3 Module",preis:6900,suffix:"",units:[1,2,3],style:"anchor",verkauft:null,
-   inh:["Super Chat + Leads + Prozess in einem Paket","Für alle, die direkt durchstarten wollen","Bester Gesamt-Hebel"]},
-  {id:"pr_member",n:"Membership",typ:"Dranbleiben & wachsen · MRR-Basis",preis:490,suffix:" / Mt.",units:[12,30,55],style:"mrr",unit_label:"aktive Mitglieder",verkauft:null,
-   inh:["Community + regelmäßige Gruppen-Calls","EINE konsolidierte Stufe (kein Stapeln)","Re-Aktivierung gegen das Monat-2/3-Loch","Läuft über MemberSpot"]},
+  {id:"pr_99",n:"99-€-Leadkurs",typ:"Leadmaschine · Einstieg",preis:99,suffix:"",units:[30,50,80],style:"",verkauft:0,
+   inh:["„Wie generiere ich planbar Leads & neue Kunden?“","Unsere Lead-Maschine — auch für dich als Kunde nutzbar","Deckt die Werbung (Self-Liquidating), qualifiziert Käufer vor"]},
+  {id:"pr_video",n:"1.000-€-Videokurs",typ:"Self-Study · ohne Support · im Bundle inkl.",preis:1000,suffix:"",units:[2,4,6],style:"",verkauft:1,focus:"opt",
+   inh:["Kompletter Selbstlern-Videokurs","Zeigt, wie du Werbeanzeigen selbst schaltest","Im Super Chat & Komplett-Bundle automatisch freigeschaltet","Komplett ohne Support / Begleitung"]},
+  {id:"pr_chat",n:"Modul 1 — Super Chat",typ:"Anfragen aus dem Bestand · Fundament",preis:2500,suffix:"",units:[2,4,7],style:"",verkauft:0,focus:"kern",
+   inh:["Fundament & Basics aufbauen, auf dem das ganze System steht","System so aufgebaut, dass das ganze Team damit arbeitet & alle Serviceanfragen abwickelt","Vertrieblich rein: Bestandskunden aktivieren → mehr Geschäft + neue Kunden","Videokurs (1.000 €) automatisch freigeschaltet — inkl. Werbeanzeigen-Wissen","Ablauf: Onboarding-Call (Checkliste) → Übergabe-Call (30 Min) → Check-Call nach 4 Wochen → Entscheidung Membership"]},
+  {id:"pr_prozess",n:"Modul 3 — Prozess & Mindset",typ:"System, CRM, Agenturhandbuch & Haltung",preis:2900,suffix:"",units:[1,2,3],style:"",verkauft:0,focus:"kern",
+   inh:["Sauberes CRM-System für die Teams aufgebaut","Agenturhandbuch erstellt — damit das Team eigenständig läuft","Wie du Mitarbeiter einstellst & Prozesse aufbaust (wie wir es gemacht haben)","Mindset/Haltung: raus aus der Inhaber-Abhängigkeit","Dauer ca. 4–8 Wochen · danach optional Membership"]},
+  {id:"pr_leads",n:"Modul 2 — Leads",typ:"Werbeanzeigen & Lead-Maschinen",preis:3500,suffix:"",units:[1,2,3],style:"",verkauft:0,
+   inh:["Werbeanzeigen-Manager komplett aufgebaut","2 Lead-Maschinen eingerichtet (fokussiert, keine „großen“ Sparten wie PKV)","3–5 Creatives je nach Produkt","Verknüpfung mit Super Chat (falls vorhanden) oder deinem CRM","Lead-Funnel erklärt: wie du daraus planbar Kunden machst",
+        {tip:true,t:"Klare Zielgruppe & Angebot, bevor 1 € Werbebudget fließt — kein Geld verbrennen"},
+        {tip:true,t:"Tracking + wöchentliche Zahlen, damit du den ROI schwarz auf weiß siehst"}]},
+  {id:"pr_bundle",n:"Komplett-Bundle",typ:"Alles inkl. · Modul 1+2+3 + Membership",preis:6900,suffix:"",units:[1,2,3],style:"anchor",verkauft:null,
+   inh:["Modul 1 (Super Chat) + Modul 2 (Leads) + Modul 3 (Prozess & Mindset)","Membership (490 €/Mt.) inklusive","50 % Anzahlung zu Beginn (wir bauen alles von Anfang an auf)","1× 1:1-Call pro Monat inklusive"]},
+  {id:"pr_member",n:"Membership",typ:"Dranbleiben & wachsen · MRR",preis:490,suffix:" / Mt.",units:[12,30,55],style:"mrr",unit_label:"aktive Mitglieder",verkauft:null,
+   inh:["Alle Community-Gruppen + Austausch mit anderen Inhabern","Regelmäßige Gruppen-Calls (Hotseat & Q&A)","Läuft über MemberSpot",
+        {tip:true,t:"Aufzeichnungen aller Calls + Vorlagen-/Skript-Bibliothek"},
+        {tip:true,t:"Monatliche Umsetzungs-Challenge — Quick Win gegen das „Loch“ in Monat 2–3"},
+        {tip:true,t:"Laufende Updates der Module & neue Strategien"}]},
 ];
 
-/* ---- Automatisierungs-Status ---- status: done | next | human ---- */
 const autoProc=[
-  // DONE
   {id:"a_content",s:"done",t:"Content-Planung Social Media",d:"Redaktionsplan & Upload laufen über Airtable-System.",tool:"Airtable",ki:"hoch",by:"wurth"},
   {id:"a_carousel",s:"done",t:"LinkedIn-Carousel-Produktion",d:"Automatisierte Carousel-Erstellung (Pillow-Skill).",tool:"Carousel-Skill",ki:"hoch",by:"wurth"},
   {id:"a_research",s:"done",t:"Wettbewerbs- & Content-Recherche",d:"LinkedIn / Instagram / YouTube live ausgelesen.",tool:"Scraper-Skills",ki:"hoch",by:"wurth"},
@@ -533,60 +556,51 @@ const autoProc=[
   {id:"a_crm",s:"done",t:"CRM & Lead-Verwaltung",d:"Pipeline, Kontakte, Opportunities zentral.",tool:"Close",ki:"hoch",by:"wurth"},
   {id:"a_recap",s:"done",t:"Coaching-Recap-Folien",d:"Aus Fireflies-Transkript automatisch CI-Folien.",tool:"Recap-Skill",ki:"hoch",by:"wurth"},
   {id:"a_lp",s:"done",t:"Angebots-Landingpage",d:"Live auf GitHub Pages, jederzeit teilbar.",tool:"GitHub Pages",ki:"hoch",by:"elite"},
-  // NEXT (KI-first, abhakbar)
   {id:"n_buch",s:"next",t:"Buchhaltung",d:"Beleg-OCR + DATEV-Export ersetzt Sandra (spart 453 €/Mt.).",tool:"Buchhaltungs-Tool",ki:"hoch",talk:true,by:"wurth"},
   {id:"n_report",s:"next",t:"Reporting / KPI-Briefing",d:"Close + Ads + Buchhaltung → dieses Dashboard + Wochen-Briefing.",tool:"Make + Close-API",ki:"hoch",by:"wurth"},
   {id:"n_onboard",s:"next",t:"Onboarding nach Kauf",d:"Willkommens-Sequenz, Zugänge, erste Schritte automatisch.",tool:"Make / E-Mail",ki:"hoch",by:"wurth"},
   {id:"n_faq",s:"next",t:"FAQ-Bot in der Community",d:"Beantwortet Standardfragen 24/7, entlastet Jasmin.",tool:"FAQ-Bot / MemberSpot",ki:"hoch",by:"wurth"},
   {id:"n_react",s:"next",t:"Lead-Reaktivierung (800)",d:"KI-Copy-Sequenz + Voice-Agent ruft & terminiert.",tool:"Close Voice-Agent",ki:"hoch",talk:true,by:"elite"},
   {id:"n_setting",s:"next",t:"Setting / Terminierung",d:"KI-Setter qualifiziert & bucht, Mensch closed.",tool:"Voice-Agent",ki:"mittel",by:"wurth"},
-  {id:"n_webinar",s:"next",t:"Evergreen-Webinar-Funnel",d:"Automatische Neukundenakquise rund um die Uhr.",tool:"Webinar-Tool",ki:"hoch",by:"elite"},
+  {id:"n_webinar",s:"next",t:"Evergreen-Webinar-Funnel",d:"Automatische Neukundenakquise rund um die Uhr.",tool:"EverWebinar",ki:"hoch",by:"elite"},
   {id:"n_ascend",s:"next",t:"Ascension-Trigger",d:"Nach Super-Chat-Check-Call automatisch Upgrade-Angebot.",tool:"Make",ki:"hoch",by:"wurth"},
-  // HUMAN
-  {id:"h_close",s:"human",t:"Sales-Closing-Calls",d:"Bleibt menschlich nur bei High-Price-Tickets (Module/Bundle). Günstige Angebote laufen über Self-Serve/Webinar. KI: Briefing davor & Recap danach.",tool:"Mensch + Fireflies",ki:"niedrig",by:"wurth"},
+  {id:"h_close",s:"human",t:"Sales-Closing-Calls",d:"Menschlich bei High-Price-Tickets (Module/Bundle). KI: Briefing davor & Recap danach.",tool:"Mensch + Fireflies",ki:"niedrig",by:"wurth"},
   {id:"h_care",s:"human",t:"Kundenbetreuung & Coaching",d:"Dein Qualitätsversprechen — bewusst menschlich.",tool:"Mensch",ki:"niedrig",by:"wurth"},
   {id:"h_lead",s:"human",t:"Strategische Entscheidungen (GL)",d:"Du entscheidest — KI assistiert (Kalender, Briefing).",tool:"KI-Assistent",ki:"mittel",talk:true,by:"wurth"},
 ];
 
+const assignees=[
+  {id:"nico",name:"Nico",color:"#2563EB"},
+  {id:"sandra",name:"Sandra",color:"#7C3AED"},
+  {id:"jasmin",name:"Jasmin",color:"#0D9488"},
+  {id:"elitewerk",name:"Elitewerk",color:"#E8820C"},
+  {id:"consulting",name:"Consulting",color:"#1A1A1A"},
+];
+const asgById=id=>assignees.find(a=>a.id===id);
+
 const tasks=[
-  {id:"p0b",ph:0,t:"Sandra-Auslauf klären + Buchhaltungs-Tool auswählen",who:"Nico+Jasmin",frist:"2026-06-27",st:0},
-  {id:"p0c",ph:0,t:"Timur: Förder-Auslaufdatum fixieren, Comp auf Provision umstellen",who:"Nico",frist:"2026-06-27",st:0},
-  {id:"p0d",ph:0,t:"Tool-Stack-Audit (Leichen kündigen, Ziel 700 €)",who:"Jasmin",frist:"2026-06-27",st:0},
-  {id:"p1a",ph:1,t:"Modul-Deliverables je Modul final dokumentieren",who:"Nico+Jasmin",frist:"2026-07-04",st:0},
-  {id:"p1b",ph:1,t:"Membership-Leistungen + Gruppen-Call-Kadenz definieren",who:"Nico+Jasmin",frist:"2026-07-04",st:0},
-  {id:"p1c",ph:1,t:"Preise festzurren (99/2.500/3.500/2.900/6.900/490)",who:"Nico",frist:"2026-07-04",st:2},
-  {id:"p1d",ph:1,t:"Community-Plattform auswählen/aufsetzen",who:"Jasmin",frist:"2026-07-11",st:0},
-  {id:"p2a",ph:2,t:"Landingpage / Website je Modul",who:"Elitewerk+Nico",frist:"2026-07-18",st:0},
-  {id:"p2b",ph:2,t:"Evergreen-Webinar aufnehmen (Super Chat + Marketing)",who:"Nico",frist:"2026-07-18",st:0},
-  {id:"p2c",ph:2,t:"Reaktivierungskampagne an 800 Leads (Copy + Versand)",who:"Elitewerk+Ömer",frist:"2026-07-25",st:0},
-  {id:"p2d",ph:2,t:"Setting-/Closing-Prozess auf neue Angebote anpassen",who:"Ömer+Timur",frist:"2026-07-25",st:0},
-  {id:"p3a",ph:3,t:"1:1 → Gruppen-Calls umstellen",who:"Nico+Jasmin",frist:"2026-08-01",st:0},
-  {id:"p3b",ph:3,t:"SOPs/Templates je Modul (Auslieferung standardisieren)",who:"Jasmin",frist:"2026-08-08",st:0},
-  {id:"p3c",ph:3,t:"Kunden-Event planen (Termin, Format, Einladung)",who:"Jasmin+Nico",frist:"2026-08-08",st:0},
-  {id:"p3d",ph:3,t:"KI-Automatisierungen (Onboarding, FAQ, Reporting) festlegen",who:"Nico",frist:"2026-08-08",st:0},
+  {id:"p0b",ph:0,t:"Sandra-Auslauf klären + Buchhaltungs-Tool auswählen",assignee:"nico",frist:"2026-06-27",st:0},
+  {id:"p0c",ph:0,t:"Timur: Förder-Auslaufdatum fixieren, Comp auf Provision umstellen",assignee:"nico",frist:"2026-06-27",st:0},
+  {id:"p0d",ph:0,t:"Tool-Stack-Audit (Leichen kündigen, Ziel 700 €)",assignee:"jasmin",frist:"2026-06-27",st:0},
+  {id:"p1a",ph:1,t:"Modul-Deliverables je Modul final dokumentieren",assignee:"consulting",frist:"2026-07-04",st:0},
+  {id:"p1b",ph:1,t:"Membership-Leistungen + Gruppen-Call-Kadenz definieren",assignee:"consulting",frist:"2026-07-04",st:0},
+  {id:"p1c",ph:1,t:"Preise festzurren (99/1.000/2.500/2.900/3.500/6.900/490)",assignee:"nico",frist:"2026-07-04",st:2},
+  {id:"p1d",ph:1,t:"Community-Plattform (MemberSpot) final einrichten",assignee:"jasmin",frist:"2026-07-11",st:0},
+  {id:"p2a",ph:2,t:"Landingpage-Unterseiten je Modul aufbauen",assignee:"elitewerk",frist:"2026-07-18",st:0},
+  {id:"p2e",ph:2,t:"Komplette Überarbeitung der Webseite",assignee:"elitewerk",frist:"2026-07-18",st:0},
+  {id:"p2b",ph:2,t:"EverWebinar aufsetzen & einrichten",assignee:"elitewerk",frist:"2026-07-18",st:0},
+  {id:"p2c",ph:2,t:"Reaktivierungskampagne an 800 Leads (Copy + Versand)",assignee:"elitewerk",frist:"2026-07-25",st:0},
+  {id:"p2d",ph:2,t:"Setting-/Closing-Prozess auf neue Angebote anpassen",assignee:"consulting",frist:"2026-07-25",st:0},
+  {id:"p3a",ph:3,t:"1:1 → Gruppen-Calls umstellen",assignee:"consulting",frist:"2026-08-01",st:0},
+  {id:"p3b",ph:3,t:"SOPs/Templates je Modul (Auslieferung standardisieren)",assignee:"jasmin",frist:"2026-08-08",st:0},
+  {id:"p3c",ph:3,t:"Kunden-Event planen (Termin, Format, Einladung)",assignee:"consulting",frist:"2026-08-08",st:0},
+  {id:"p3d",ph:3,t:"KI-Automatisierungen (Onboarding, FAQ, Reporting) festlegen",assignee:"nico",frist:"2026-08-08",st:0},
 ];
 const phaseInfo=[
   {t:"Phase 0",d:"Sofort-Kosten · bis 27.06."},
   {t:"Phase 1",d:"Angebot & Preise · bis 11.07."},
   {t:"Phase 2",d:"Vermarktung & Funnel · bis 25.07."},
   {t:"Phase 3",d:"Auslieferung & Skalierung · bis 08.08."},
-];
-const kpis=[
-  ["Entnahme/Monat","Netto-Umsatz − Kosten","↑ 34 k","up"],
-  ["MRR","aktive Mitglieder × 490 €","↑","up"],
-  ["Aktive Mitglieder","Membership-Bestand","↑","up"],
-  ["Modulverkäufe","Stück je Typ/Monat","↑","up"],
-  ["Fixkostenquote","Fixkosten / Netto-Umsatz","↓","down"],
-  ["Webinar-Show-Rate","Teilnehmer / Anmeldungen","↑","up"],
-  ["Close-Rate","Abschlüsse / Calls","↑","up"],
-  ["Lead-Reaktivierung","Abschlüsse aus 800 Leads","↑","up"],
-  ["CAC","Werbekosten / Neukunden","↓","down"],
-];
-const risks=[
-  ["🪤","Bundle-Kannibalisierung","Premium-Bundle (6.900 €) darf Einzelmodul-Verkäufe nicht ersetzen — Anker, nicht Standard."],
-  ["📉","Membership-Churn Monat 2–3","„Loch“ durch Energieabfall. Re-Aktivierungsmechanik genau dort einbauen."],
-  ["⏰","Überfällige Maßnahmen","Aufgaben mit roter Frist im Board sofort eskalieren."],
-  ["💸","CAC > 99-€-Einnahmen","Self-Liquidating-Funnel kippt — Leadkurs muss Ads decken (CAC ≤ Einnahmen 99-€-Kurs)."],
 ];
 const toolGroups=[
   {g:"Bereits im Einsatz (alles vorhanden)",items:[
@@ -601,79 +615,63 @@ const toolGroups=[
   ]},
   {g:"Offen – meine Empfehlung dazu",items:[
     {n:"Buchhaltungs-Tool",d:"Ersetzt Sandra (603 € → 150 €). <b>Empfehlung:</b> sevDesk oder lexoffice (DE, Beleg-OCR + DATEV/Steuerberater-Export). <b>Mit Nico entscheiden.</b>",st:"talk"},
-    {n:"Checkout / Zahlungsanbieter",d:"Für Kurs + Module + Membership (2 % Gebühren im Modell). <b>Empfehlung:</b> CopeCart oder Digistore24 (DE, Brutto-Rechnung + Abo + Affiliate).",st:"talk"},
-    {n:"Evergreen-Webinar-Tool",d:"Automatische Neukundenakquise rund um die Uhr. <b>Empfehlung:</b> WebinarJam/EverWebinar oder eWebinar. <b>Phase 2, bis 18.07.</b>",st:"todo"},
+    {n:"Checkout / Zahlungsanbieter",d:"Für Kurs + Module + Membership (2 % Gebühren im Modell). <b>Empfehlung:</b> CopeCart oder Digistore24 (DE, Brutto-Rechnung + Abo + Anzahlung).",st:"talk"},
+    {n:"EverWebinar",d:"Automatische Neukundenakquise rund um die Uhr. <b>Liegt bei Elitewerk.</b> <b>Phase 2, bis 18.07.</b>",st:"todo"},
     {n:"Werbekonten (Meta / Google Ads)",d:"Ans Dashboard anbinden für CAC & Werbekosten. <b>Liegt bei Elitewerk</b> — Zugänge/Reporting-Export holen.",st:"todo"},
   ]},
 ];
 
 /* ===== STATE ===== */
-const KEY="wurth_dash_v2";
+const KEY="wurth_dash_v3";
 let state=load();
 function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
 function save(){localStorage.setItem(KEY,JSON.stringify(state))}
 state.scn=state.scn??1;
-state.taskSt=state.taskSt||{};
+state.period=state.period||"monat";
 state.checks=state.checks||{};
 state.autoDone=state.autoDone||{};
-state.funnel=state.funnel||{kontaktiert:0,webinar:0,call:0,abschluss:0};
 if(!state.verkauft){state.verkauft={};produkte.forEach(p=>{state.verkauft[p.id]=p.verkauft;});}
+state.taskMeta=state.taskMeta||{};
+tasks.forEach(t=>{ if(!state.taskMeta[t.id]) state.taskMeta[t.id]={assignee:t.assignee||null,frist:t.frist,st:t.st,comments:[]}; });
 
 const eur=n=>Math.round(n).toLocaleString("de-DE")+" €";
 const num=n=>Math.round(n).toLocaleString("de-DE");
 const parseNum=s=>{const v=parseInt(String(s).replace(/[^\d]/g,""),10);return isNaN(v)?0:v};
 const $=s=>document.querySelector(s);
+const meta=id=>state.taskMeta[id];
 
-/* ===== §1 Automation ===== */
-function autoIsDone(p){ if(p.s==="done")return true; if(p.s==="next")return !!state.autoDone[p.id]; return false; }
-function kiLabel(k){return k==="hoch"?"hoch":k==="mittel"?"mittel":"niedrig"}
+/* ===== §1 ===== */
+function autoIsDone(p){if(p.s==="done")return true;if(p.s==="next")return !!state.autoDone[p.id];return false;}
+function kiLabel(k){return k}
 function renderAuto(){
   const cols={done:[],next:[],human:[]};
   autoProc.forEach(p=>cols[p.s].push(p));
   const mk=(p)=>{
-    const done=autoIsDone(p);
-    const showCb=p.s==="next";
-    const cb= showCb?`<div class="cbx ${done?'done':''}" data-auto="${p.id}">${done?'✓':''}</div>`
-                    : `<span class="dn" style="background:${p.s==='done'?'var(--green)':'var(--grey-l)'}"></span>`;
-    const byBadge=p.by==="elite"
-      ? '<span class="by-tag by-elite">Elitewerk</span>'
-      : '<span class="by-tag by-wurth">Wurth Consulting</span>';
-    return `<div class="acard ${done&&p.s==='next'?'done-row':''}">
-      ${cb}
-      <div class="ab">
-        <div class="at">${p.t}</div>
-        <div class="ad">${p.d}</div>
+    const done=autoIsDone(p);const showCb=p.s==="next";
+    const cb=showCb?`<div class="cbx ${done?'done':''}" data-auto="${p.id}">${done?'✓':''}</div>`
+                  :`<span class="dn" style="background:${p.s==='done'?'var(--green)':'var(--grey-l)'}"></span>`;
+    const byBadge=p.by==="elite"?'<span class="by-tag by-elite">Elitewerk</span>':'<span class="by-tag by-wurth">Wurth Consulting</span>';
+    return `<div class="acard ${done&&p.s==='next'?'done-row':''}">${cb}
+      <div class="ab"><div class="at">${p.t}</div><div class="ad">${p.d}</div>
         <div class="arow who-row">${byBadge}${p.talk?'<span class="talk-tag">mit Nico</span>':''}</div>
-        <div class="arow">
-          <span class="tool-tag">${p.tool}</span>
-          <span class="kibar ki-${p.ki}"><i></i></span><span class="ki-lab">KI ${kiLabel(p.ki)}</span>
-        </div>
+        <div class="arow"><span class="tool-tag">${p.tool}</span><span class="kibar ki-${p.ki}"><i></i></span><span class="ki-lab">KI ${kiLabel(p.ki)}</span></div>
       </div></div>`;
   };
   $("#col-done").innerHTML=cols.done.map(mk).join("");
   $("#col-next").innerHTML=cols.next.map(mk).join("");
   $("#col-human").innerHTML=cols.human.map(mk).join("");
-
   const nextDone=cols.next.filter(p=>state.autoDone[p.id]).length;
   const doneTotal=cols.done.length+nextDone;
-  const automatable=cols.done.length+cols.next.length; // human excluded from %
-  $("#cDone").textContent=doneTotal;
-  $("#cNext").textContent=cols.next.length-nextDone;
-  $("#cHuman").textContent=cols.human.length;
-  $("#cnt0").textContent=cols.done.length;
-  $("#cnt1").textContent=cols.next.length;
-  $("#cnt2").textContent=cols.human.length;
-  const pctDone=Math.round(doneTotal/automatable*100);
-  const pctNext=Math.round((cols.next.length-nextDone)/automatable*100);
-  $("#barDone").style.width=pctDone+"%";
-  $("#barNext").style.width=pctNext+"%";
-  $("#autoPctLab").textContent=pctDone+" % erledigt";
+  const automatable=cols.done.length+cols.next.length;
+  $("#cDone").textContent=doneTotal;$("#cNext").textContent=cols.next.length-nextDone;$("#cHuman").textContent=cols.human.length;
+  $("#cnt0").textContent=cols.done.length;$("#cnt1").textContent=cols.next.length;$("#cnt2").textContent=cols.human.length;
+  const pctDone=Math.round(doneTotal/automatable*100), pctNext=Math.round((cols.next.length-nextDone)/automatable*100);
+  $("#barDone").style.width=pctDone+"%";$("#barNext").style.width=pctNext+"%";$("#autoPctLab").textContent=pctDone+" % erledigt";
 }
 
-/* ===== §2 Produkte ===== */
+/* ===== §2 ===== */
 function renderProducts(){
   const s=state.scn;
-  $("#prodHint").textContent="„Bereits verkauft“ = Ist (editierbar) · Ziel-Zeile = Projektion bei Szenario "+SCN[s]+" · alle Preise brutto";
   $("#prodGrid").innerHTML=produkte.map(p=>{
     const u=p.units[s], rev=p.preis*u;
     const zielLab=p.unit_label?`${u} ${p.unit_label}`:`${u} × verkauft`;
@@ -681,71 +679,62 @@ function renderProducts(){
     const soldDisp=(sold===null||sold===undefined||sold==="")?"?":num(sold);
     const soldEmpty=(soldDisp==="?")?"empty":"";
     const focusBadge=p.focus==="kern"?'<span class="focus-badge fb-kern">★ Kern-Fokus</span>'
-                    :p.focus==="opt"?'<span class="focus-badge fb-opt">Optional · Verstärker</span>':'';
+                    :p.focus==="opt"?'<span class="focus-badge fb-opt">Optional</span>':'';
+    const lis=p.inh.map(i=>typeof i==="string"?`<li>${i}</li>`:`<li class="tip">${i.t}</li>`).join("");
     return `<div class="pcard ${p.style} ${p.focus==="kern"?"kern":""}">
-      <div class="ph">
-        <div class="ptype">${p.typ}</div>
-        <div class="pname">${p.n}</div>
-        <div class="pprice">${num(p.preis)} €<small>${p.suffix||" brutto"}</small></div>
-        ${focusBadge}
-      </div>
-      <div class="pbody">
-        <div class="clab">Das ist drin</div>
-        <ul>${p.inh.map(i=>`<li>${i}</li>`).join("")}</ul>
-      </div>
+      <div class="ph"><div class="ptype">${p.typ}</div><div class="pname">${p.n}</div>
+        <div class="pprice">${num(p.preis)} €<small>${p.suffix||" brutto"}</small></div>${focusBadge}</div>
+      <div class="pbody"><div class="clab">Das ist drin</div><ul>${lis}</ul></div>
       <div class="sold"><span class="sl">Bereits verkauft</span><span class="sv ${soldEmpty}" contenteditable="true" data-sold="${p.id}">${soldDisp}</span></div>
-      <div class="pfoot">
-        <div class="pl">Ziel · ${SCN[s]}</div>
-        <div class="prow2"><span class="sc">${zielLab}</span><span class="rev">${eur(rev)} / Mt.</span></div>
-      </div>
+      <div class="pfoot"><div class="pl">Ziel · ${SCN[s]}</div>
+        <div class="prow2"><span class="sc">${zielLab}</span><span class="rev">${eur(rev)} / Mt.</span></div></div>
     </div>`;
   }).join("");
 }
 
-/* ===== §3 Szenario ===== */
+/* ===== §3 ===== */
 function renderScenario(){
+  const m=state.period==="jahr"?12:1;
+  const suf=state.period==="jahr"?" / Jahr":" / Monat";
   const rows=[
-    ["Brutto-Umsatz",finanz.brutto],["Netto-Umsatz",finanz.netto],
-    ["./. Fixkosten (Ziel)",finanz.fix.map(x=>-x)],
-    ["./. Vertriebsprovision (5 %)",finanz.provision.map(x=>-x)],
-    ["./. Zahlungsgebühren (2 %)",finanz.gebuehren.map(x=>-x)],
+    ["Brutto-Umsatz",finanz.brutto,1],["Netto-Umsatz",finanz.netto,1],
+    ["./. Fixkosten",finanz.fix,-1],["./. Vertriebsprovision (5 %)",finanz.provision,-1],
+    ["./. Zahlungsgebühren (2 %)",finanz.gebuehren,-1],
   ];
   const tb=$("#scnTable tbody");tb.innerHTML="";
-  rows.forEach(([lab,arr])=>{
+  rows.forEach(([lab,arr,sign])=>{
     const tr=document.createElement("tr");
-    tr.innerHTML=`<td>${lab}</td>`+arr.map((v,i)=>`<td class="${i===state.scn?'col-on':''}">${eur(v)}</td>`).join("");
+    tr.innerHTML=`<td>${lab}</td>`+arr.map((v,i)=>`<td class="${i===state.scn?'col-on':''}">${eur(v*sign*m)}</td>`).join("");
     tb.appendChild(tr);
   });
   const tr=document.createElement("tr");tr.className="total";
-  tr.innerHTML=`<td>Entnahmepotenzial / Monat</td>`+finanz.entnahme.map((v,i)=>`<td class="${i===state.scn?'col-on':''}">${eur(v)}</td>`).join("");
+  tr.innerHTML=`<td>Brutto-Umsatz${suf}</td>`+finanz.brutto.map((v,i)=>`<td class="${i===state.scn?'col-on':''}">${eur(v*m)}</td>`).join("");
   tb.appendChild(tr);
-  const tr2=document.createElement("tr");tr2.className="total";
-  tr2.innerHTML=`<td style="color:var(--grey);font-weight:600">Entnahme / Jahr</td>`+finanz.entnahme.map((v,i)=>`<td class="${i===state.scn?'col-on':''}" style="color:var(--grey)">${num(v*12)} €</td>`).join("");
-  tb.appendChild(tr2);
   document.querySelectorAll("#scnTable thead th[data-c]").forEach(th=>th.classList.toggle("col-on",+th.dataset.c===state.scn));
-  const max=Math.max(...finanz.entnahme);
+  const max=Math.max(...finanz.brutto);
   $("#scnBars").innerHTML=SCN.map((n,i)=>`
-    <div class="b ${i===state.scn?'on':''}">
-      <div class="t">${n}</div><div class="n">${eur(finanz.entnahme[i])}</div>
-      <div class="barv"><i style="width:${finanz.entnahme[i]/max*100}%"></i></div>
-      <div class="t" style="margin-top:8px">Umsatz ${num(finanz.brutto[i])} €</div>
-    </div>`).join("");
+    <div class="b ${i===state.scn?'on':''}"><div class="t">${n}</div>
+      <div class="n">${eur(finanz.brutto[i]*m)}</div>
+      <div class="barv"><i style="width:${finanz.brutto[i]/max*100}%"></i></div>
+      <div class="t" style="margin-top:8px">Netto ${num(finanz.netto[i]*m)} €</div></div>`).join("");
 }
 
 /* ===== §4 Board ===== */
-function taskStatus(t){return state.taskSt[t.id]??t.st}
-function isOverdue(t){return taskStatus(t)<2 && new Date(t.frist)<TODAY}
-function fmtFrist(f){return new Date(f).toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"})}
+function getFrist(id){return meta(id).frist}
+function isOverdue(id){return meta(id).st<2 && new Date(getFrist(id))<TODAY}
 function renderBoard(){
   const cols=[{st:0,t:"Offen",dc:"dot-offen"},{st:1,t:"In Arbeit",dc:"dot-arbeit"},{st:2,t:"Erledigt",dc:"dot-erledigt"}];
   $("#kanban").innerHTML=cols.map(c=>{
-    const list=tasks.filter(t=>taskStatus(t)===c.st);
+    const list=tasks.filter(t=>meta(t.id).st===c.st);
     return `<div class="kcol" data-st="${c.st}"><h3><span class="dotc ${c.dc}"></span>${c.t}<span class="cnt">${list.length}</span></h3>
-      ${list.map(t=>{const over=isOverdue(t);
-        return `<div class="tcard ${over?'over':''}" draggable="true" data-id="${t.id}"><span class="hintclick">ziehen / tippen</span>
-          <div class="tt"><span class="grip">⠿</span>${t.t}</div>
-          <div class="tm"><span class="ph2">P${t.ph}</span>
-          <span class="fr ${over?'red':''}">📅 ${fmtFrist(t.frist)}${over?' · überfällig':''}</span></div></div>`;
+      ${list.map(t=>{
+        const mt=meta(t.id), over=isOverdue(t.id), a=mt.assignee?asgById(mt.assignee):null;
+        const asg=a?`<span class="asg" style="background:${a.color}">${a.name}</span>`:`<span class="asg none">+ zuweisen</span>`;
+        const cc=mt.comments&&mt.comments.length?`<span class="ccount">💬 ${mt.comments.length}</span>`:'';
+        return `<div class="tcard ${over?'over':''}" draggable="true" data-id="${t.id}"><span class="openhint">öffnen</span>
+          <div class="tt"><span class="grip">⠿</span><span>${t.t}</span></div>
+          <div class="tm"><span class="ph2">P${t.ph}</span>${asg}
+            <input type="date" class="cdate ${over?'red':''}" value="${mt.frist}" data-date="${t.id}">${cc}</div></div>`;
       }).join("")||'<div style="font-size:12px;color:var(--grey-l);padding:8px 2px">hier ablegen …</div>'}
     </div>`;
   }).join("");
@@ -753,32 +742,14 @@ function renderBoard(){
 function renderPhases(){
   $("#phaseGrid").innerHTML=phaseInfo.map((p,i)=>{
     const ts=tasks.filter(t=>t.ph===i);
-    const done=ts.filter(t=>taskStatus(t)===2).length;
-    const over=ts.filter(t=>isOverdue(t)).length;
+    const done=ts.filter(t=>meta(t.id).st===2).length;
+    const over=ts.filter(t=>isOverdue(t.id)).length;
     const pct=Math.round(done/ts.length*100);
     return `<div class="card phase"><div class="pt">${p.t}</div><div class="pd">${p.d}</div>
       <div class="ring-wrap"><div class="ring" data-pct="${pct}%" style="--p:${pct}"></div>
       <div class="meta"><b>${done}/${ts.length}</b> erledigt<br>
       ${over?`<span style="color:var(--red);font-weight:700">${over} überfällig</span>`:'<span style="color:var(--green)">im Plan</span>'}</div></div></div>`;
   }).join("");
-}
-function renderFunnel(){
-  const steps=[["kontaktiert","Kontaktiert"],["webinar","Webinar angemeldet"],["call","Call gebucht"],["abschluss","Abgeschlossen"]];
-  const f=state.funnel, vals=[f.kontaktiert,f.webinar,f.call,f.abschluss];
-  $("#funnel").innerHTML=steps.map((s,i)=>{
-    const prev=i===0?800:vals[i-1];
-    const pc=prev?Math.round(vals[i]/prev*100):0;
-    const barPc=Math.min(100,vals[i]/800*100);
-    return `<div class="fstep">${i<3?'<span class="arrow">→</span>':''}
-      <div class="fl">${s[1]}</div>
-      <input type="text" inputmode="numeric" data-f="${s[0]}" value="${num(vals[i])}">
-      <div class="pc">${i===0?'von 800 Leads':pc+'% vom Schritt davor'}</div>
-      <div class="fbar"><i style="width:${barPc}%"></i></div></div>`;
-  }).join("");
-}
-function renderKPIlist(){
-  $("#kpiBody").innerHTML=kpis.map(k=>`<tr><td>${k[0]}</td><td style="text-align:left;color:var(--grey)">${k[1]}</td><td><span class="trend ${k[3]}">${k[2]}</span></td></tr>`).join("");
-  $("#riskList").innerHTML=risks.map(r=>`<div class="flag"><div class="fi">${r[0]}</div><div><div class="ft">${r[1]}</div><div class="fd">${r[2]}</div></div></div>`).join("");
 }
 function renderTools(){
   $("#toolList").innerHTML=toolGroups.map(g=>`<div class="tgroup">
@@ -794,29 +765,65 @@ function renderTools(){
 }
 function renderTop(){
   $("#dateChip").textContent="Stand "+STAND;
-  $("#freiIdx").textContent=eur(finanz.entnahme[state.scn]+finanz.mitglieder[state.scn]*MEMBERSHIP_PREIS);
+  $("#topUmsatz").textContent=eur(finanz.brutto[state.scn]);
   document.querySelectorAll("#scnToggle button").forEach(b=>b.classList.toggle("on",+b.dataset.scn===state.scn));
 }
-function renderAll(){renderTop();renderAuto();renderProducts();renderScenario();renderBoard();renderPhases();renderFunnel();renderKPIlist();renderTools();}
+function renderAll(){renderTop();renderAuto();renderProducts();renderScenario();renderBoard();renderPhases();renderTools();}
+
+/* ===== MODAL ===== */
+let modalId=null;
+function fmtTs(iso){const d=new Date(iso);return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"2-digit"})+" "+d.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});}
+function openModal(id){
+  modalId=id;const t=tasks.find(x=>x.id===id),mt=meta(id);
+  $("#mTitle").textContent=t.t;
+  $("#mPhase").textContent="Phase "+t.ph;
+  $("#mAsg").innerHTML=assignees.map(a=>`<button class="asg-btn ${mt.assignee===a.id?'on':''}" style="background:${a.color};color:${a.id==='consulting'?'#fff':'#fff'}" data-asg="${a.id}">${a.name}</button>`).join("")
+    +`<button class="asg-btn clear ${!mt.assignee?'on':''}" data-asg="">– keiner</button>`;
+  $("#mDate").value=mt.frist;
+  $("#mStatus").innerHTML=[["0","Offen"],["1","In Arbeit"],["2","Erledigt"]].map(([v,l])=>`<button class="${mt.st==+v?'on':''}" data-st="${v}">${l}</button>`).join("");
+  renderComments();
+  $("#mCommentInput").value="";
+  $("#taskModal").classList.remove("hidden");
+}
+function renderComments(){
+  const mt=meta(modalId);
+  $("#mComments").innerHTML=(mt.comments&&mt.comments.length)
+    ? mt.comments.map((c,i)=>`<div class="cmt"><button class="cdel" data-del="${i}">🗑</button>${c.t}<div class="cmeta">${fmtTs(c.d)}</div></div>`).join("")
+    : '<div class="comment-empty">Noch keine Kommentare.</div>';
+}
+function closeModal(){$("#taskModal").classList.add("hidden");modalId=null;}
 
 /* ===== EVENTS ===== */
 $("#scnToggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.scn=+b.dataset.scn;save();renderTop();renderProducts();renderScenario();});
+$("#periodToggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.period=b.dataset.p;document.querySelectorAll("#periodToggle button").forEach(x=>x.classList.toggle("on",x===b));save();renderScenario();});
 $("#auto").addEventListener("click",e=>{const c=e.target.closest(".cbx[data-auto]");if(!c)return;const id=c.dataset.auto;state.autoDone[id]=!state.autoDone[id];save();renderAuto();});
-// Klick/Tippen: Status weiterschalten (gut für Touch)
-$("#kanban").addEventListener("click",e=>{const c=e.target.closest(".tcard");if(!c||c.dataset.dragged)return;const t=tasks.find(x=>x.id===c.dataset.id);state.taskSt[t.id]=((taskStatus(t))+1)%3;save();renderBoard();renderPhases();});
-// Drag & Drop zwischen den Spalten
+$("#prodGrid").addEventListener("blur",e=>{const el=e.target.closest("[data-sold]");if(!el)return;const raw=el.textContent.trim();state.verkauft[el.dataset.sold]=(raw===""||raw==="?")?null:parseNum(raw);save();renderProducts();},true);
+$("#prodGrid").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.closest("[data-sold]")){e.preventDefault();e.target.blur();}});
+$("#toolList").addEventListener("click",e=>{const c=e.target.closest(".cbx2");if(!c)return;const id=c.dataset.check;state.checks[id]=!(state.checks[id]??c.classList.contains("done"));save();renderTools();});
+
+// Board: date inline, drag, click-to-open
+$("#kanban").addEventListener("change",e=>{const d=e.target.closest("input[data-date]");if(!d)return;meta(d.dataset.date).frist=d.value;save();renderBoard();renderPhases();});
 let dragId=null;
 $("#kanban").addEventListener("dragstart",e=>{const c=e.target.closest(".tcard");if(!c)return;dragId=c.dataset.id;c.classList.add("dragging");c.dataset.dragged="1";e.dataTransfer.effectAllowed="move";});
 $("#kanban").addEventListener("dragend",e=>{const c=e.target.closest(".tcard");if(c){c.classList.remove("dragging");setTimeout(()=>{delete c.dataset.dragged;},0);}document.querySelectorAll(".kcol.dragover").forEach(k=>k.classList.remove("dragover"));});
 $("#kanban").addEventListener("dragover",e=>{const k=e.target.closest(".kcol");if(!k)return;e.preventDefault();k.classList.add("dragover");});
 $("#kanban").addEventListener("dragleave",e=>{const k=e.target.closest(".kcol");if(k&&!k.contains(e.relatedTarget))k.classList.remove("dragover");});
-$("#kanban").addEventListener("drop",e=>{const k=e.target.closest(".kcol");if(!k||dragId===null)return;e.preventDefault();state.taskSt[dragId]=+k.dataset.st;dragId=null;save();renderBoard();renderPhases();});
-// Bereits-verkauft editierbar
-$("#prodGrid").addEventListener("blur",e=>{const el=e.target.closest("[data-sold]");if(!el)return;const raw=el.textContent.trim();state.verkauft[el.dataset.sold]=(raw===""||raw==="?")?null:parseNum(raw);save();renderProducts();},true);
-$("#prodGrid").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.closest("[data-sold]")){e.preventDefault();e.target.blur();}});
-$("#funnel").addEventListener("input",e=>{const inp=e.target.closest("input[data-f]");if(!inp)return;state.funnel[inp.dataset.f]=parseNum(inp.value);save();});
-$("#funnel").addEventListener("blur",e=>{if(e.target.closest("input[data-f]"))renderFunnel();},true);
-$("#toolList").addEventListener("click",e=>{const c=e.target.closest(".cbx2");if(!c)return;const id=c.dataset.check;state.checks[id]=!(state.checks[id]??c.classList.contains("done"));save();renderTools();});
+$("#kanban").addEventListener("drop",e=>{const k=e.target.closest(".kcol");if(!k||dragId===null)return;e.preventDefault();meta(dragId).st=+k.dataset.st;dragId=null;save();renderBoard();renderPhases();});
+$("#kanban").addEventListener("click",e=>{
+  if(e.target.closest("input[data-date]"))return;
+  const c=e.target.closest(".tcard");if(!c||c.dataset.dragged)return;
+  openModal(c.dataset.id);
+});
+
+// Modal events
+$("#modalX").addEventListener("click",closeModal);
+$("#taskModal").addEventListener("click",e=>{if(e.target.id==="taskModal")closeModal();});
+$("#mAsg").addEventListener("click",e=>{const b=e.target.closest("[data-asg]");if(!b)return;meta(modalId).assignee=b.dataset.asg||null;save();openModal(modalId);renderBoard();});
+$("#mDate").addEventListener("change",e=>{meta(modalId).frist=e.target.value;save();renderBoard();renderPhases();});
+$("#mStatus").addEventListener("click",e=>{const b=e.target.closest("[data-st]");if(!b)return;meta(modalId).st=+b.dataset.st;save();openModal(modalId);renderBoard();renderPhases();});
+$("#mCommentAdd").addEventListener("click",()=>{const v=$("#mCommentInput").value.trim();if(!v)return;const mt=meta(modalId);mt.comments=mt.comments||[];mt.comments.push({t:v,d:new Date().toISOString()});save();$("#mCommentInput").value="";renderComments();renderBoard();});
+$("#mComments").addEventListener("click",e=>{const d=e.target.closest("[data-del]");if(!d)return;meta(modalId).comments.splice(+d.dataset.del,1);save();renderComments();renderBoard();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modalId)closeModal();});
 
 renderAll();
 </script>
