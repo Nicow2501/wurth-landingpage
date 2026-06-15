@@ -117,6 +117,26 @@
   .design-note .dn-item{flex:1;min-width:220px;border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:#fff;font-size:12.5px;color:var(--grey)}
   .design-note .dn-item b{color:var(--ink)}
 
+  /* Einschätzung */
+  .take{background:var(--anthrazit);color:#fff;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+  .take .verdict{font-size:15px;line-height:1.6;color:#e9e9ec;max-width:920px}
+  .take .verdict b{color:var(--mint)}
+  .take-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+  .tk{background:#26262b;border:1px solid #34343a;border-radius:13px;padding:16px}
+  .tk .th{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px;margin-bottom:11px}
+  .tk.good .th{color:var(--mint)}.tk.risk .th{color:#ffb454}.tk.fast .th{color:#8ab4ff}
+  .tk ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .tk li{font-size:12.8px;line-height:1.45;color:#d4d4d8;display:flex;gap:8px}
+  .tk li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;margin-top:6px}
+  .tk.good li::before{background:var(--mint)}.tk.risk li::before{background:#ffb454}.tk.fast li::before{background:#8ab4ff}
+  .tk li b{color:#fff}
+  .take .week{margin-top:18px;background:linear-gradient(135deg,#1F8A4C,#177a42);border-radius:13px;padding:16px 18px}
+  .take .week .wh{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;color:#d9ffe9}
+  .take .week ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:7px}
+  .take .week li{font-size:13px;line-height:1.4;color:#fff}
+  .take .week li b{color:#eafff4}
+  .take .sig{margin-top:16px;font-size:11.5px;color:var(--grey-l);font-style:italic}
+
   /* Tables / scenario */
   table{width:100%;border-collapse:collapse;font-size:13.5px}
   th,td{text-align:right;padding:11px 14px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
@@ -293,6 +313,56 @@
     </div>
   </section>
 
+  <!-- ★ EINSCHÄTZUNG -->
+  <section id="take">
+    <div class="sec-head">
+      <span class="num" style="background:rgba(43,218,185,.15);color:var(--mint-deep)">★</span>
+      <h2>Meine Einschätzung & der schnellste Weg</h2>
+      <span class="hint">Klartext-Beratersicht aufs Gesamtkonzept</span>
+    </div>
+    <div class="take">
+      <div class="verdict">
+        Kurz gesagt: <b>Das Konzept ist richtig gebaut</b> — Einstieg über schnellen Cash aus dem Bestand, dann Ausbau, dann wiederkehrende Membership. Das ist genau die Reihenfolge, die funktioniert. Die zwei Stellen, an denen solche Modelle scheitern, sind aber fast immer dieselben: <b>man baut zu lange, bevor man verkauft</b> — und <b>man unterschätzt den Membership-Churn</b>. Wenn du diese zwei im Griff hast, geht es deutlich schneller.
+      </div>
+      <div class="take-grid">
+        <div class="tk good">
+          <div class="th">✓ Das ist stark</div>
+          <ul>
+            <li><b>Super Chat als Einstieg</b> ist der richtige Wedge: schnellster sichtbarer ROI, niedrigstes Risiko für den Kunden, am leichtesten zu verkaufen. Damit zuerst nach vorn.</li>
+            <li><b>Self-Liquidating-Funnel</b> (99 € deckt Ads) ist der Motor. Module sind dann fast reiner Gewinn.</li>
+            <li><b>Membership = EINE Stufe</b> + Gruppen-Calls statt 1:1. Genau so kommst du als Engpass raus.</li>
+          </ul>
+        </div>
+        <div class="tk risk">
+          <div class="th">⚠ Größtes Risiko</div>
+          <ul>
+            <li><b>Zu viel bauen vor dem ersten Verkauf.</b> Webinar, Funnel, Community im Juli zu perfektionieren, bevor das modulare Angebot überhaupt an echten Käufern getestet ist — das frisst Zeit & Geld.</li>
+            <li><b>Membership-Churn Monat 2–3.</b> Ohne fest eingebaute Quick-Win-/Re-Aktivierungs­mechanik bröckelt die MRR genau da, wo dein eigentlicher Wert sitzt.</li>
+            <li><b>CAC entgleist still.</b> Wenn der 99-€-Kurs die Ads nicht mehr deckt, kippt das ganze Modell — und du merkst es erst spät.</li>
+          </ul>
+        </div>
+        <div class="tk fast">
+          <div class="th">⚡ Schneller vorankommen</div>
+          <ul>
+            <li><b>800 Leads ZUERST</b>, nicht in Phase 2. Reaktivierung ist billiger als kalte Ads, bringt sofort Cash und testet die neue Botschaft. Notfalls erst manuell verkaufen.</li>
+            <li><b>Verkaufen vor Automatisieren.</b> Erst Käufer & Cash, dann Funnel/Community ausbauen — nicht umgekehrt.</li>
+            <li><b>Buchhaltungs-Tool sofort</b> (spart ab Tag 1 453 €/Mt.) und <b>1:1 → Gruppen-Calls früher</b> ziehen.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="week">
+        <div class="wh">Wenn ich du wäre — diese Woche</div>
+        <ol>
+          <li><b>Angebot & Preise final festzurren</b> (steht eh, nur bestätigen) — damit du sofort verkaufsfähig bist.</li>
+          <li><b>Buchhaltungs-Tool entscheiden</b> (sevDesk/lexoffice) → 453 €/Mt. Einsparung gestartet, Sandra-Auslauf terminiert.</li>
+          <li><b>Reaktivierung der 800 Leads starten</b> — mit dem Super-Chat-Angebot, auch erstmal ohne fertigen Funnel. Erster Cash rein.</li>
+          <li><b>Wochen-Check fixieren:</b> nur EINE Zahl im Blick — <b>Freiheits-Index (Entnahme + MRR)</b>.</li>
+        </ol>
+      </div>
+      <div class="sig">— Eingebaut auf deinen Wunsch: meine Beratersicht. Kein Ersatz für deine Entscheidung, sondern ein schnellerer Startpunkt.</div>
+    </div>
+  </section>
+
   <!-- 3. SZENARIO -->
   <section id="szenario">
     <div class="sec-head"><span class="num">3</span><h2>Szenario-Vergleich</h2>
@@ -416,7 +486,6 @@ const autoProc=[
 ];
 
 const tasks=[
-  {id:"p0a",ph:0,t:"Elitewerk-Gespräch: Gewinnbeteiligung → Fixum / kleines Umsatz-%",who:"Nico",frist:"2026-06-20",st:0},
   {id:"p0b",ph:0,t:"Sandra-Auslauf klären + Buchhaltungs-Tool auswählen",who:"Nico+Jasmin",frist:"2026-06-27",st:0},
   {id:"p0c",ph:0,t:"Timur: Förder-Auslaufdatum fixieren, Comp auf Provision umstellen",who:"Nico",frist:"2026-06-27",st:0},
   {id:"p0d",ph:0,t:"Tool-Stack-Audit (Leichen kündigen, Ziel 700 €)",who:"Jasmin",frist:"2026-06-27",st:0},
