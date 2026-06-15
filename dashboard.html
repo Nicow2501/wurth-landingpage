@@ -142,7 +142,7 @@
   .pcard .pfoot .sc{color:var(--grey)}
   .pcard .pfoot .rev{font-weight:760;font-variant-numeric:tabular-nums;font-size:13px}
   .design-note{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
-  .design-note .dn-item{flex:1;min-width:220px;border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:#fff;font-size:12.5px;color:var(--grey)}
+  .design-note .dn-item{flex:1;min-width:240px;border:1px solid var(--line);border-radius:11px;padding:15px 16px;background:#fff;font-size:14px;line-height:1.5;color:var(--grey)}
   .design-note .dn-item b{color:var(--ink)}
 
   /* Einschätzung */
@@ -154,8 +154,8 @@
   .tk .th{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px;margin-bottom:11px}
   .tk.good .th{color:var(--mint)}.tk.risk .th{color:#ffb454}.tk.fast .th{color:#8ab4ff}
   .tk ul{list-style:none;display:flex;flex-direction:column;gap:9px}
-  .tk li{font-size:12.8px;line-height:1.45;color:#d4d4d8;display:flex;gap:8px}
-  .tk li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;margin-top:6px}
+  .tk li{font-size:12.8px;line-height:1.5;color:#d4d4d8;position:relative;padding-left:16px}
+  .tk li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:50%}
   .tk.good li::before{background:var(--mint)}.tk.risk li::before{background:#ffb454}.tk.fast li::before{background:#8ab4ff}
   .tk li b{color:#fff}
   .take .week{margin-top:18px;background:linear-gradient(135deg,#1F8A4C,#177a42);border-radius:13px;padding:16px 18px}
@@ -321,7 +321,7 @@
       </div>
       <div class="acol">
         <h3 class="h-next"><span class="dotc dot-arbeit"></span>Als Nächstes: KI-first <span class="cnt" id="cnt1">0</span></h3>
-        <div class="sub">Hier holen wir die größten Hebel. Abhaken, sobald erledigt.</div><div id="col-next"></div>
+        <div class="sub"><b style="color:#2563EB">Nico baut diese Automatisierungen auf</b> — größte Hebel zuerst. Abhaken, sobald erledigt.</div><div id="col-next"></div>
       </div>
       <div class="acol">
         <h3 class="h-human"><span class="dotc dot-offen"></span>Bleibt menschlich <span class="cnt" id="cnt2">0</span></h3>
@@ -445,7 +445,7 @@
   <!-- 3. SZENARIO -->
   <section id="szenario">
     <div class="sec-head"><span class="num">3</span><h2>Umsatz-Szenarien</h2>
-      <span class="hint">Werte umschaltbar pro Monat / Jahr · Szenario oben wählen</span></div>
+      <span class="hint">Reiner Umsatz (keine Kosten) · pro Monat / Jahr umschaltbar</span></div>
     <div class="card pad">
       <div class="period-toggle">
         <span style="font-size:12.5px;font-weight:700;color:var(--grey)">Werte:</span>
@@ -504,7 +504,7 @@
       <div class="mp" id="mPhase"></div>
     </div>
     <div class="modal-body">
-      <div class="msec"><label>Zuständig</label><div class="asg-row" id="mAsg"></div></div>
+      <div class="msec"><label>Zuständig (Mehrfachauswahl)</label><div class="asg-row" id="mAsg"></div></div>
       <div class="msec"><label>Fällig am</label><br><input type="date" class="mdate" id="mDate"></div>
       <div class="msec"><label>Status</label><div class="status-row" id="mStatus"></div></div>
       <div class="msec"><label>Kommentare</label>
@@ -632,7 +632,13 @@ state.checks=state.checks||{};
 state.autoDone=state.autoDone||{};
 if(!state.verkauft){state.verkauft={};produkte.forEach(p=>{state.verkauft[p.id]=p.verkauft;});}
 state.taskMeta=state.taskMeta||{};
-tasks.forEach(t=>{ if(!state.taskMeta[t.id]) state.taskMeta[t.id]={assignee:t.assignee||null,frist:t.frist,st:t.st,comments:[]}; });
+tasks.forEach(t=>{
+  let m=state.taskMeta[t.id];
+  if(!m){ m=state.taskMeta[t.id]={assignees:(t.assignee?[t.assignee]:[]),frist:t.frist,st:t.st,comments:[]}; }
+  if(m.assignee!==undefined){ if(!m.assignees) m.assignees=m.assignee?[m.assignee]:[]; delete m.assignee; }
+  if(!Array.isArray(m.assignees)) m.assignees=t.assignee?[t.assignee]:[];
+  if(!Array.isArray(m.comments)) m.comments=[];
+});
 
 const eur=n=>Math.round(n).toLocaleString("de-DE")+" €";
 const num=n=>Math.round(n).toLocaleString("de-DE");
@@ -697,9 +703,7 @@ function renderScenario(){
   const m=state.period==="jahr"?12:1;
   const suf=state.period==="jahr"?" / Jahr":" / Monat";
   const rows=[
-    ["Brutto-Umsatz",finanz.brutto,1],["Netto-Umsatz",finanz.netto,1],
-    ["./. Fixkosten",finanz.fix,-1],["./. Vertriebsprovision (5 %)",finanz.provision,-1],
-    ["./. Zahlungsgebühren (2 %)",finanz.gebuehren,-1],
+    ["Netto-Umsatz",finanz.netto,1],
   ];
   const tb=$("#scnTable tbody");tb.innerHTML="";
   rows.forEach(([lab,arr,sign])=>{
@@ -728,8 +732,10 @@ function renderBoard(){
     const list=tasks.filter(t=>meta(t.id).st===c.st);
     return `<div class="kcol" data-st="${c.st}"><h3><span class="dotc ${c.dc}"></span>${c.t}<span class="cnt">${list.length}</span></h3>
       ${list.map(t=>{
-        const mt=meta(t.id), over=isOverdue(t.id), a=mt.assignee?asgById(mt.assignee):null;
-        const asg=a?`<span class="asg" style="background:${a.color}">${a.name}</span>`:`<span class="asg none">+ zuweisen</span>`;
+        const mt=meta(t.id), over=isOverdue(t.id);
+        const asg=(mt.assignees&&mt.assignees.length)
+          ? mt.assignees.map(aid=>{const a=asgById(aid);return a?`<span class="asg" style="background:${a.color}">${a.name}</span>`:'';}).join('')
+          : `<span class="asg none">+ zuweisen</span>`;
         const cc=mt.comments&&mt.comments.length?`<span class="ccount">💬 ${mt.comments.length}</span>`:'';
         return `<div class="tcard ${over?'over':''}" draggable="true" data-id="${t.id}"><span class="openhint">öffnen</span>
           <div class="tt"><span class="grip">⠿</span><span>${t.t}</span></div>
@@ -777,8 +783,7 @@ function openModal(id){
   modalId=id;const t=tasks.find(x=>x.id===id),mt=meta(id);
   $("#mTitle").textContent=t.t;
   $("#mPhase").textContent="Phase "+t.ph;
-  $("#mAsg").innerHTML=assignees.map(a=>`<button class="asg-btn ${mt.assignee===a.id?'on':''}" style="background:${a.color};color:${a.id==='consulting'?'#fff':'#fff'}" data-asg="${a.id}">${a.name}</button>`).join("")
-    +`<button class="asg-btn clear ${!mt.assignee?'on':''}" data-asg="">– keiner</button>`;
+  $("#mAsg").innerHTML=assignees.map(a=>`<button class="asg-btn ${mt.assignees.includes(a.id)?'on':''}" style="background:${a.color}" data-asg="${a.id}">${a.name}</button>`).join("");
   $("#mDate").value=mt.frist;
   $("#mStatus").innerHTML=[["0","Offen"],["1","In Arbeit"],["2","Erledigt"]].map(([v,l])=>`<button class="${mt.st==+v?'on':''}" data-st="${v}">${l}</button>`).join("");
   renderComments();
@@ -818,7 +823,7 @@ $("#kanban").addEventListener("click",e=>{
 // Modal events
 $("#modalX").addEventListener("click",closeModal);
 $("#taskModal").addEventListener("click",e=>{if(e.target.id==="taskModal")closeModal();});
-$("#mAsg").addEventListener("click",e=>{const b=e.target.closest("[data-asg]");if(!b)return;meta(modalId).assignee=b.dataset.asg||null;save();openModal(modalId);renderBoard();});
+$("#mAsg").addEventListener("click",e=>{const b=e.target.closest("[data-asg]");if(!b)return;const arr=meta(modalId).assignees;const id=b.dataset.asg;const i=arr.indexOf(id);if(i>=0)arr.splice(i,1);else arr.push(id);save();openModal(modalId);renderBoard();});
 $("#mDate").addEventListener("change",e=>{meta(modalId).frist=e.target.value;save();renderBoard();renderPhases();});
 $("#mStatus").addEventListener("click",e=>{const b=e.target.closest("[data-st]");if(!b)return;meta(modalId).st=+b.dataset.st;save();openModal(modalId);renderBoard();renderPhases();});
 $("#mCommentAdd").addEventListener("click",()=>{const v=$("#mCommentInput").value.trim();if(!v)return;const mt=meta(modalId);mt.comments=mt.comments||[];mt.comments.push({t:v,d:new Date().toISOString()});save();$("#mCommentInput").value="";renderComments();renderBoard();});
